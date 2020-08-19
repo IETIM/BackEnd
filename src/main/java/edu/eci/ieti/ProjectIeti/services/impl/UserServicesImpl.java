@@ -4,7 +4,9 @@ import edu.eci.ieti.ProjectIeti.model.User;
 import edu.eci.ieti.ProjectIeti.persistence.UserRepository;
 import edu.eci.ieti.ProjectIeti.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserServicesImpl implements UserServices {
 
     @Autowired
