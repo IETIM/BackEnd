@@ -5,6 +5,7 @@ import edu.eci.ieti.ProjectIeti.persistence.UserRepository;
 import edu.eci.ieti.ProjectIeti.services.ExceptionProject;
 import edu.eci.ieti.ProjectIeti.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -14,6 +15,8 @@ public class UserServicesImpl implements UserServices {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public void addUser(User user) throws ExceptionProject {
@@ -22,6 +25,7 @@ public class UserServicesImpl implements UserServices {
         if (optionalUser.isPresent()) {
             throw new ExceptionProject(ExceptionProject.USER_REGISTERED);
         } else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
         }
 
