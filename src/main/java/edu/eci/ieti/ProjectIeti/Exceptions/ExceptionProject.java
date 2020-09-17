@@ -1,4 +1,4 @@
-package edu.eci.ieti.ProjectIeti.services;
+package edu.eci.ieti.ProjectIeti.Exceptions;
 
 public class ExceptionProject extends Exception {
     public static final String USER_REGISTERED = "User already registered" ;

@@ -2,7 +2,7 @@ package edu.eci.ieti.ProjectIeti.services.impl;
 
 import edu.eci.ieti.ProjectIeti.model.User;
 import edu.eci.ieti.ProjectIeti.persistence.UserRepository;
-import edu.eci.ieti.ProjectIeti.services.ExceptionProject;
+import edu.eci.ieti.ProjectIeti.Exceptions.ExceptionProject;
 import edu.eci.ieti.ProjectIeti.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
