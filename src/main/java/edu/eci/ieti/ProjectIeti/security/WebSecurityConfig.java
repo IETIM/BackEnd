@@ -55,7 +55,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
                 .antMatchers("/login","/register").permitAll()
                 .antMatchers(HttpMethod.GET,"/product/*","/tiendas").permitAll()
                 .antMatchers(HttpMethod.POST,"/product/*").hasAnyRole("TENDERO")
-
+                .antMatchers(HttpMethod.PUT,"/product/*").hasAnyRole("TENDERO")
+                .antMatchers("/profile").hasAnyRole("TENDERO","USER")
                 .anyRequest().authenticated().and().
 
                 exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
