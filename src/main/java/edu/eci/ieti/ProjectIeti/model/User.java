@@ -26,7 +26,7 @@ public class User implements UserDetails {
     @JoinTable(name = "users_roles",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = { @JoinColumn(name = "role_id")})
-    private List<GrantedAuthority> authorities;
+    private List<Role> authorities;
 
     public User() {
         this.authorities=new ArrayList<>();
@@ -91,11 +91,11 @@ public class User implements UserDetails {
 
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection<? extends Role> getAuthorities() {
         return this.authorities;
     }
 
-    public void setAuthorities(List<GrantedAuthority> authorities) {
+    public void setAuthorities(List<Role> authorities) {
         this.authorities = authorities;
     }
 }
