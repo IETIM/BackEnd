@@ -20,8 +20,6 @@ public class TiendaController {
     @Autowired
     private TiendaServices tiendaServices;
 
-
-
     @GetMapping(path = "/{nombre}")
     public ResponseEntity<?> getTiendaByNombre(@PathVariable String nombre){
         try {

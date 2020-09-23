@@ -3,6 +3,7 @@ package edu.eci.ieti.ProjectIeti.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -51,9 +52,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
         httpSecurity.csrf().disable().cors().and()
 
                 .authorizeRequests()
-                .antMatchers("/login","/register").permitAll().
-
-                anyRequest().authenticated().and().
+                .antMatchers("/login","/register").permitAll()
+                .antMatchers(HttpMethod.GET,"/product/*","/tiendas").permitAll()
+                .antMatchers(HttpMethod.POST,"/product/*").hasAnyRole("TENDERO")
+                .antMatchers(HttpMethod.PUT,"/product/*").hasAnyRole("TENDERO")
+                .antMatchers("/profile").hasAnyRole("TENDERO","USER")
+                .anyRequest().authenticated().and().
 
                 exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
 
