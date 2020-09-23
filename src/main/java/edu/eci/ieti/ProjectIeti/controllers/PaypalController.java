@@ -25,9 +25,13 @@ public class PaypalController {
     @PostMapping("/pay")
     public String payment(@ModelAttribute("order") Order order) {
         try {
+            // SUCCESS AND CANCEL URL = DOMAIN+SECCESS_URL / CANCEL_URL
+            System.out.println("MODOFOKIU LA CURRENCY ------------>" + order.getCurrency());
+            System.out.println("MODOFOKIU EL PRICE ------------>" + order.getPrice());
             Payment payment = service.createPayment(order.getPrice(), order.getCurrency(), order.getMethod(),
-                    order.getIntent(), order.getDescription(), "http://localhost:9090/" + CANCEL_URL,
-                    "http://localhost:9090/" + SUCCESS_URL);
+                    order.getIntent(), order.getDescription(), "https://www.stanford.edu/",
+                    "https://www.w3schools.com/");
+
             for(Links link:payment.getLinks()) {
                 if(link.getRel().equals("approval_url")) {
                     return "redirect:"+link.getHref();
@@ -38,7 +42,7 @@ public class PaypalController {
 
             e.printStackTrace();
         }
-        return "redirect:/";
+        return "redirect:/coñopayment";
     }
 
     @GetMapping(value = CANCEL_URL)
@@ -57,7 +61,7 @@ public class PaypalController {
         } catch (PayPalRESTException e) {
             System.out.println(e.getMessage());
         }
-        return "redirect:/";
+        return "redirect:/coñosuccesspay";
     }
 
 }

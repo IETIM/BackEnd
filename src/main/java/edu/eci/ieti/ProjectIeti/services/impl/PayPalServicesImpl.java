@@ -3,13 +3,9 @@ package edu.eci.ieti.ProjectIeti.services.impl;
 import com.paypal.api.payments.Amount;
 import com.paypal.api.payments.Payment;
 import edu.eci.ieti.ProjectIeti.services.PayServices;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.paypal.api.payments.Amount;
 import com.paypal.api.payments.Payer;
-import com.paypal.api.payments.Payment;
 import com.paypal.api.payments.PaymentExecution;
 import com.paypal.api.payments.RedirectUrls;
 import com.paypal.api.payments.Transaction;
@@ -18,6 +14,7 @@ import com.paypal.base.rest.PayPalRESTException;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,9 +34,9 @@ public class PayPalServicesImpl implements PayServices {
                                  String cancelUrl,
                                  String successUrl) throws PayPalRESTException {
         Amount amount = new Amount();
+        DecimalFormat df = new DecimalFormat("#.##");
+        amount.setTotal(df.format(total));
         amount.setCurrency(currency);
-        total = new BigDecimal(total).setScale(2, RoundingMode.HALF_UP).doubleValue();
-        amount.setTotal(String.format("%.2f", total));
 
         Transaction transaction = new Transaction();
         transaction.setDescription(description);
@@ -70,5 +67,11 @@ public class PayPalServicesImpl implements PayServices {
         PaymentExecution paymentExecute = new PaymentExecution();
         paymentExecute.setPayerId(payerId);
         return payment.execute(apiContext, paymentExecute);
+    }
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }
