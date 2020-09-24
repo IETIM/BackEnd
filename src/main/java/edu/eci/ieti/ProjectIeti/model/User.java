@@ -13,6 +13,9 @@ import java.util.List;
 public class User implements UserDetails {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     @Column(nullable = false)
     private String correo;
 
@@ -38,6 +41,14 @@ public class User implements UserDetails {
         this.password = password;
         this.authorities=new ArrayList<>();
 
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getCorreo() {

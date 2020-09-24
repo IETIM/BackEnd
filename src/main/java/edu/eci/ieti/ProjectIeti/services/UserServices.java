@@ -9,7 +9,7 @@ public interface UserServices {
 
      User getUserByCorreo(String correo);
 
-     void update (User user);
+     void update (User user)throws ExceptionProject;
 
 
 }

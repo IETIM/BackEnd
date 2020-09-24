@@ -14,5 +14,6 @@ public interface TiendaRepository extends JpaRepository<Tienda,Long> {
     List<Tienda> findAllByTipoComercio(TipoComercio tipoComercio);
 
     Optional<Tienda> findByNombre(String nombre);
+    Optional<Tienda>findById(Long id);
 
 }
