@@ -2,6 +2,7 @@ package edu.eci.ieti.ProjectIeti.services.impl;
 
 import com.paypal.api.payments.Amount;
 import com.paypal.api.payments.Payment;
+import edu.eci.ieti.ProjectIeti.config.PaypalConfig;
 import edu.eci.ieti.ProjectIeti.services.PayServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,9 +22,8 @@ import java.util.List;
 @Service
 public class PayPalServicesImpl implements PayServices {
 
+    APIContext apiContext;
 
-    @Autowired
-    private APIContext apiContext;
 
     @Override
     public Payment createPayment(Double total,
@@ -33,6 +33,12 @@ public class PayPalServicesImpl implements PayServices {
                                  String description,
                                  String cancelUrl,
                                  String successUrl) throws PayPalRESTException {
+        PaypalConfig pc = new PaypalConfig();
+        pc.setClientId("AQHEkaz_E0vSsZxJ6hF8pHnr8G1TZvKEKeT-G4r218xQJk0ckMCpz93ZJQXaIfPqcx5yatSBDsoIZiXc");
+        pc.setClientSecret("EFdNXWp0xMkxRR65fEoMJif2fNVjv7pQieNVt3JxoQtn9LlGYnC_922IQ33AhLW5nKesELDEt4JS_VAq");
+        pc.setMode("sandbox");
+        apiContext = pc.apiContext();
+
         Amount amount = new Amount();
         DecimalFormat df = new DecimalFormat("#.##");
         amount.setTotal(df.format(total));
