@@ -7,5 +7,11 @@ import java.util.List;
 
 public interface ProductServices {
 
-    List<Producto> getProducts(String tienda) throws ExceptionTienda;
+    List<Producto> getProducts(Long idTienda) throws ExceptionTienda;
+
+    void addProduct(Producto producto, Long idTienda) throws ExceptionTienda;
+
+    void updateProduct(Producto producto, Long idProducto)throws ExceptionTienda;
+
+    void deleteProduct(Long idProducto)throws ExceptionTienda;
 }

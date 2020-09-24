@@ -13,6 +13,5 @@ import java.util.List;
 @Repository
 public interface ProductoRepository extends JpaRepository<Producto,Long> {
 
-    @Query(value = "SELECT * from producto WHERE id_tienda =  (select id from tienda where nombre = :tienda)",nativeQuery = true)
-    List<Producto> findAllByTienda(@Param("tienda") String tienda);
+    List<Producto> findAllByTienda(@Param("tienda") Long idTienda);
 }

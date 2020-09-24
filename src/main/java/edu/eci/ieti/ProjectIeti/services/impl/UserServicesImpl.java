@@ -37,7 +37,17 @@ public class UserServicesImpl implements UserServices {
     }
 
     @Override
-    public void update(User user) {
-
+    public void update(User user) throws ExceptionProject {
+        Optional<User> usuarioOpcional=userRepository.getUserById(user.getId());
+        if(!usuarioOpcional.isPresent()){
+            throw new ExceptionProject(ExceptionProject.USER_NOT_FOUND);
+        }
+        else {
+            User usuarioActual=usuarioOpcional.get();
+            usuarioActual.setName(user.getName());
+            usuarioActual.setCorreo(user.getCorreo());
+            usuarioActual.setPassword(passwordEncoder.encode(user.getPassword()));
+            userRepository.save(usuarioActual);
+        }
     }
 }
