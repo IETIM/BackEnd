@@ -6,13 +6,16 @@ public class Order {
     private String method;
     private String intent;
     private String description;
+    private String shop;
 
-    public Order(double price, String currency, String method, String intent, String description) {
+    public Order(String shop,double price, String currency, String method, String intent, String description) {
+        this.shop = shop;
         this.price = price;
         this.currency = currency;
         this.method = method;
         this.intent = intent;
         this.description = description;
+
     }
 
     public Order() {
@@ -56,5 +59,13 @@ public class Order {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getShop() {
+        return shop;
+    }
+
+    public void setShop(String shop) {
+        this.shop = shop;
     }
 }

@@ -23,5 +23,17 @@ public class Tienda {
     @Column(nullable = false)
     private TipoComercio tipoComercio;
 
+    @Column(nullable =  true)
+    private String apiClient;
 
+    @Column(nullable =  true)
+    private String apiSecret;
+
+    public String getApiClient() {
+        return apiClient;
+    }
+
+    public String getApiSecret() {
+        return apiSecret;
+    }
 }

@@ -1,5 +1,6 @@
 package edu.eci.ieti.ProjectIeti.controllers;
 
+import edu.eci.ieti.ProjectIeti.Exceptions.ExceptionTienda;
 import edu.eci.ieti.ProjectIeti.model.Order;
 import edu.eci.ieti.ProjectIeti.services.PayServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class PaypalController {
             // SUCCESS AND CANCEL URL = DOMAIN+SECCESS_URL / CANCEL_URL
             System.out.println("MODOFOKIU LA CURRENCY ------------>" + order.getCurrency());
             System.out.println("MODOFOKIU EL PRICE ------------>" + order.getPrice());
-            Payment payment = service.createPayment(order.getPrice(), order.getCurrency(), order.getMethod(),
+            Payment payment = service.createPayment(order.getShop(),order.getPrice(), order.getCurrency(), order.getMethod(),
                     order.getIntent(), order.getDescription(), "https://www.stanford.edu/",
                     "https://www.w3schools.com/");
 
@@ -38,7 +39,7 @@ public class PaypalController {
                 }
             }
 
-        } catch (PayPalRESTException e) {
+        } catch (PayPalRESTException | ExceptionTienda e) {
 
             e.printStackTrace();
         }
