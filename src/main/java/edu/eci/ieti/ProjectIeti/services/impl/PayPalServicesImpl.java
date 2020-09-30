@@ -2,10 +2,10 @@ package edu.eci.ieti.ProjectIeti.services.impl;
 
 import com.paypal.api.payments.Amount;
 import com.paypal.api.payments.Payment;
-import edu.eci.ieti.ProjectIeti.Exceptions.ExceptionTienda;
+import edu.eci.ieti.ProjectIeti.Exceptions.ExceptionShop;
 import edu.eci.ieti.ProjectIeti.config.PaypalConfig;
-import edu.eci.ieti.ProjectIeti.model.Tienda;
-import edu.eci.ieti.ProjectIeti.persistence.TiendaRepository;
+import edu.eci.ieti.ProjectIeti.model.Shop;
+import edu.eci.ieti.ProjectIeti.persistence.ShopRepository;
 import edu.eci.ieti.ProjectIeti.services.PayServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,6 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PayPalServicesImpl implements PayServices {
@@ -29,7 +28,7 @@ public class PayPalServicesImpl implements PayServices {
     APIContext apiContext;
 
     @Autowired
-    private TiendaRepository tiendaRepository;
+    private ShopRepository tiendaRepository;
 
 
     @Override
@@ -40,7 +39,7 @@ public class PayPalServicesImpl implements PayServices {
                                  String intent,
                                  String description,
                                  String cancelUrl,
-                                 String successUrl) throws PayPalRESTException, ExceptionTienda {
+                                 String successUrl) throws PayPalRESTException, ExceptionShop {
         setPaymentConfiguration(shop);
         Amount amount = new Amount();
         DecimalFormat df = new DecimalFormat("#.##");
@@ -84,9 +83,9 @@ public class PayPalServicesImpl implements PayServices {
         return bd.doubleValue();
     }
 
-    private void setPaymentConfiguration(String shop) throws PayPalRESTException, ExceptionTienda {
+    private void setPaymentConfiguration(String shop) throws PayPalRESTException, ExceptionShop {
         PaypalConfig pc = new PaypalConfig();
-        Tienda tr = tiendaRepository.findByNombre(shop).orElseThrow(() -> new ExceptionTienda(ExceptionTienda.TIENDA_NO_ENCONTRADA));
+        Shop tr = tiendaRepository.findByName(shop).orElseThrow(() -> new ExceptionShop(ExceptionShop.SHOP_NOT_FOUND));
         String c="AQHEkaz_E0vSsZxJ6hF8pHnr8G1TZvKEKeT-G4r218xQJk0ckMCpz93ZJQXaIfPqcx5yatSBDsoIZiXc";
         String s = "EFdNXWp0xMkxRR65fEoMJif2fNVjv7pQieNVt3JxoQtn9LlGYnC_922IQ33AhLW5nKesELDEt4JS_VAq";
         pc.setClientId(tr.getApiClient());

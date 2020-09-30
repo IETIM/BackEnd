@@ -21,7 +21,7 @@ public class UserServicesImpl implements UserServices {
     @Override
     public void addUser(User user) throws ExceptionProject {
 
-        Optional<User> optionalUser = userRepository.getUserByCorreo(user.getCorreo());
+        Optional<User> optionalUser = userRepository.getUserByEmail(user.getEmail());
         if (optionalUser.isPresent()) {
             throw new ExceptionProject(ExceptionProject.USER_REGISTERED);
         } else {
@@ -32,20 +32,20 @@ public class UserServicesImpl implements UserServices {
     }
 
     @Override
-    public User getUserByCorreo(String correo) {
-        return userRepository.getUserByCorreo(correo).get();
+    public User getUserByEmail(String email) {
+        return userRepository.getUserByEmail(email).get();
     }
 
     @Override
     public void update(User user) throws ExceptionProject {
-        Optional<User> usuarioOpcional=userRepository.getUserById(user.getId());
+        Optional<User> usuarioOpcional=userRepository.findById(user.getId());
         if(!usuarioOpcional.isPresent()){
             throw new ExceptionProject(ExceptionProject.USER_NOT_FOUND);
         }
         else {
             User usuarioActual=usuarioOpcional.get();
             usuarioActual.setName(user.getName());
-            usuarioActual.setCorreo(user.getCorreo());
+            usuarioActual.setEmail(user.getEmail());
             usuarioActual.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(usuarioActual);
         }

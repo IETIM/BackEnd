@@ -1,10 +1,10 @@
 package edu.eci.ieti.ProjectIeti.services.impl;
 
-import edu.eci.ieti.ProjectIeti.Exceptions.ExceptionTienda;
-import edu.eci.ieti.ProjectIeti.model.Producto;
-import edu.eci.ieti.ProjectIeti.model.Tienda;
-import edu.eci.ieti.ProjectIeti.persistence.ProductoRepository;
-import edu.eci.ieti.ProjectIeti.persistence.TiendaRepository;
+import edu.eci.ieti.ProjectIeti.Exceptions.ExceptionShop;
+import edu.eci.ieti.ProjectIeti.model.Product;
+import edu.eci.ieti.ProjectIeti.model.Shop;
+import edu.eci.ieti.ProjectIeti.persistence.ProductRepository;
+import edu.eci.ieti.ProjectIeti.persistence.ShopRepository;
 import edu.eci.ieti.ProjectIeti.services.ProductServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,40 +16,40 @@ import java.util.Optional;
 public class ProductServicesImpl implements ProductServices {
 
     @Autowired
-    private ProductoRepository productoRepository;
+    private ProductRepository productRepository;
 
     @Autowired
-    private TiendaRepository tiendaRepository;
+    private ShopRepository shopRepository;
 
 
     @Override
-    public List<Producto> getProducts(Long idTienda) throws ExceptionTienda {
-        Optional<Tienda> findTienda =tiendaRepository.findById(idTienda);
-        Tienda tienda=findTienda.orElseThrow(() -> new ExceptionTienda(ExceptionTienda.TIENDA_NO_ENCONTRADA));
-        return tienda.getProductos();
+    public List<Product> getProducts(String idTienda) throws ExceptionShop {
+        Optional<Shop> findShop =shopRepository.findById(idTienda);
+        Shop shop =findShop.orElseThrow(() -> new ExceptionShop(ExceptionShop.SHOP_NOT_FOUND));
+        return shop.getProducts();
     }
 
     @Override
-    public void addProduct(Producto producto, Long idTienda) throws ExceptionTienda {
-        Optional<Tienda> findTienda =tiendaRepository.findById(idTienda);
-        Tienda tienda=findTienda.orElseThrow(() -> new ExceptionTienda(ExceptionTienda.TIENDA_NO_ENCONTRADA));
-        tienda.getProductos().add(producto);
-        tiendaRepository.save(tienda);
+    public void addProduct(Product product, String idTienda) throws ExceptionShop {
+        Optional<Shop> findShop =shopRepository.findById(idTienda);
+        Shop shop =findShop.orElseThrow(() -> new ExceptionShop(ExceptionShop.SHOP_NOT_FOUND));
+        shop.getProducts().add(product);
+        shopRepository.save(shop);
     }
 
     @Override
-    public void updateProduct(Producto producto, Long idProducto) throws ExceptionTienda {
-        Optional<Producto> optionalProducto= productoRepository.findById(idProducto);
-        Producto productoActual= optionalProducto.orElseThrow(() -> new ExceptionTienda(ExceptionTienda.PRODUCTO_NO_ENCONTRADO));
-        productoActual.setDescripcion(producto.getDescripcion());
-        productoActual.setExistencias(producto.getExistencias());
-        productoActual.setNombre(producto.getNombre());
-        producto.setPrecio(producto.getPrecio());
-        productoRepository.save(productoActual);
+    public void updateProduct(Product product, String idProduct) throws ExceptionShop {
+        Optional<Product> optionalProduct= productRepository.findById(idProduct);
+        Product actualProduct = optionalProduct.orElseThrow(() -> new ExceptionShop(ExceptionShop.PRODUCT_NOT_FOUND));
+        actualProduct.setDescription(product.getDescription());
+        actualProduct.setStocks(product.getStocks());
+        actualProduct.setName(product.getName());
+        actualProduct.setPrice(product.getPrice());
+        productRepository.save(actualProduct);
     }
 
     @Override
-    public void deleteProduct(Long idProducto) throws ExceptionTienda {
-        productoRepository.deleteById(idProducto);
+    public void deleteProduct(String idProduct) throws ExceptionShop {
+        productRepository.deleteById(idProduct);
     }
 }

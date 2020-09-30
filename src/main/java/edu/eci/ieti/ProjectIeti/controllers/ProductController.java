@@ -1,59 +1,58 @@
 package edu.eci.ieti.ProjectIeti.controllers;
 
-import edu.eci.ieti.ProjectIeti.Exceptions.ExceptionTienda;
-import edu.eci.ieti.ProjectIeti.model.Producto;
+import edu.eci.ieti.ProjectIeti.Exceptions.ExceptionShop;
+import edu.eci.ieti.ProjectIeti.model.Product;
 import edu.eci.ieti.ProjectIeti.services.ProductServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/tiendas")
+@RequestMapping(value = "/shops")
 public class ProductController {
 
     @Autowired
     private ProductServices productServices;
 
-    @GetMapping(path = "/{idTienda}/products")
-    public ResponseEntity<?> getProductsByTienda(@PathVariable Long idTienda){
+    @GetMapping(path = "/{idShop}/products")
+    public ResponseEntity<?> getProductsByShop(@PathVariable String idShop){
         try {
-            return ResponseEntity.ok(productServices.getProducts(idTienda));
-        } catch (ExceptionTienda e) {
+            return ResponseEntity.ok(productServices.getProducts(idShop));
+        } catch (ExceptionShop e) {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @PostMapping(value = "/{idTienda}/products")
-    public ResponseEntity<?> addProduct(@RequestBody Producto producto,@PathVariable Long idTienda){
+    @PostMapping(value = "/{idShop}/products")
+    public ResponseEntity<?> addProduct(@RequestBody Product product, @PathVariable String idShop){
         try {
-            productServices.addProduct(producto,idTienda);
+            productServices.addProduct(product,idShop);
             return new ResponseEntity<>(HttpStatus.CREATED);
-        }catch (ExceptionTienda e){
+        }catch (ExceptionShop e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
     @PatchMapping(value = "/products/{idProduct}")
-    public ResponseEntity<?> updateProduct(@RequestBody Producto producto,@PathVariable Long idProducto){
+    public ResponseEntity<?> updateProduct(@RequestBody Product product, @PathVariable String idProduct){
         try{
-            productServices.updateProduct(producto,idProducto);
+            productServices.updateProduct(product,idProduct);
             return new ResponseEntity<>(HttpStatus.OK);
 
 
-        }catch (ExceptionTienda e){
+        }catch (ExceptionShop e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
     @DeleteMapping(value = "products/{idProduct}")
-    public ResponseEntity<?> deleteProduct(@PathVariable Long idProducto){
+    public ResponseEntity<?> deleteProduct(@PathVariable String idProduct){
         try{
-            productServices.deleteProduct(idProducto);
+            productServices.deleteProduct(idProduct);
             return new ResponseEntity<>(HttpStatus.OK);
-        }catch (ExceptionTienda e){
+        }catch (ExceptionShop e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }

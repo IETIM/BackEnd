@@ -28,7 +28,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
 
-        User usuario = userRepository.getUserByCorreo(s).get();
+        User usuario = userRepository.getUserByEmail(s).get();
 
         List<GrantedAuthority> authorities = usuario.getAuthorities()
                 .stream()
@@ -36,7 +36,7 @@ public class JwtUserDetailsService implements UserDetailsService {
                 .peek(authority -> logger.info("Rol: " + authority.getAuthority()))
                 .collect(Collectors.toList());
 
-        return new org.springframework.security.core.userdetails.User(usuario.getCorreo(),usuario.getPassword(),usuario.isEnabled(),true,true,true,authorities);
+        return new org.springframework.security.core.userdetails.User(usuario.getEmail(),usuario.getPassword(),usuario.isEnabled(),true,true,true,authorities);
     }
 
 }

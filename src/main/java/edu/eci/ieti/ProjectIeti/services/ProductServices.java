@@ -1,17 +1,17 @@
 package edu.eci.ieti.ProjectIeti.services;
 
-import edu.eci.ieti.ProjectIeti.Exceptions.ExceptionTienda;
-import edu.eci.ieti.ProjectIeti.model.Producto;
+import edu.eci.ieti.ProjectIeti.Exceptions.ExceptionShop;
+import edu.eci.ieti.ProjectIeti.model.Product;
 
 import java.util.List;
 
 public interface ProductServices {
 
-    List<Producto> getProducts(Long idTienda) throws ExceptionTienda;
+    List<Product> getProducts(String idShop) throws ExceptionShop;
 
-    void addProduct(Producto producto, Long idTienda) throws ExceptionTienda;
+    void addProduct(Product product, String idShop) throws ExceptionShop;
 
-    void updateProduct(Producto producto, Long idProducto)throws ExceptionTienda;
+    void updateProduct(Product product, String idProduct)throws ExceptionShop;
 
-    void deleteProduct(Long idProducto)throws ExceptionTienda;
+    void deleteProduct(String idProduct)throws ExceptionShop;
 }

@@ -7,7 +7,7 @@ public interface UserServices {
 
      void addUser(User user) throws ExceptionProject;
 
-     User getUserByCorreo(String correo);
+     User getUserByEmail(String email);
 
      void update (User user)throws ExceptionProject;
 
