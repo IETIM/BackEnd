@@ -2,9 +2,11 @@ package edu.eci.ieti.ProjectIeti.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "shops")
@@ -14,9 +16,10 @@ public class Shop {
     @Id
     private String id;
 
+    @Indexed(unique = true)
     private String name;
 
-    @DBRef(lazy = true)
+    @DBRef
     private List<Product> products;
 
     private String ubication;
@@ -28,7 +31,10 @@ public class Shop {
     private String apiSecret;
 
     public Shop() {
+        this.products=new ArrayList<>();
+
     }
+
 
     public String getId() {
         return id;

@@ -38,4 +38,14 @@ public class ShopController {
         }
         return new ResponseEntity<>(shops, HttpStatus.ACCEPTED);
     }
+    @PostMapping()
+    public ResponseEntity<?>addShop(@RequestBody Shop shop){
+        try {
+            shopServices.addShop(shop);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (ExceptionShop e) {
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
+        }
+
+    }
 }

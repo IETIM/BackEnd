@@ -33,6 +33,7 @@ public class ProductServicesImpl implements ProductServices {
     public void addProduct(Product product, String idTienda) throws ExceptionShop {
         Optional<Shop> findShop =shopRepository.findById(idTienda);
         Shop shop =findShop.orElseThrow(() -> new ExceptionShop(ExceptionShop.SHOP_NOT_FOUND));
+        productRepository.save(product);
         shop.getProducts().add(product);
         shopRepository.save(shop);
     }

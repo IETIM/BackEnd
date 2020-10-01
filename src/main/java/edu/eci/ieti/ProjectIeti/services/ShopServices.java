@@ -13,5 +13,6 @@ public interface ShopServices {
 
     Shop getShopsByName(String name) throws ExceptionShop;
 
+    void addShop(Shop shop) throws ExceptionShop;
 }
 

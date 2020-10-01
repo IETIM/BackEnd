@@ -13,4 +13,6 @@ public interface ShopRepository extends MongoRepository<Shop,String> {
 
     Optional<Shop> findByName(String name);
 
+
+
 }

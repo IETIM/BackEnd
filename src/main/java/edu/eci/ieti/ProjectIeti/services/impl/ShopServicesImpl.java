@@ -30,4 +30,15 @@ public class ShopServicesImpl implements ShopServices {
         return shopRepository.findByName(name).orElseThrow(() -> new ExceptionShop(ExceptionShop.SHOP_NOT_FOUND));
     }
 
+    @Override
+    public void addShop(Shop shop) throws ExceptionShop {
+        if(shopRepository.findByName(shop.getName()).isPresent()){
+            throw new ExceptionShop(ExceptionShop.SHOP_REGISTERED);
+        }
+        else {
+            shopRepository.save(shop);
+        }
+    }
+
+
 }
