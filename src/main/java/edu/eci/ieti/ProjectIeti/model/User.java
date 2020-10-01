@@ -2,6 +2,7 @@ package edu.eci.ieti.ProjectIeti.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +17,7 @@ public class User implements UserDetails {
     @Id
     private String id;
 
+    @Indexed(unique = true)
     private String email;
 
     private String name;

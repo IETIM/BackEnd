@@ -42,10 +42,18 @@ public class ProductServicesImpl implements ProductServices {
     public void updateProduct(Product product, String idProduct) throws ExceptionShop {
         Optional<Product> optionalProduct= productRepository.findById(idProduct);
         Product actualProduct = optionalProduct.orElseThrow(() -> new ExceptionShop(ExceptionShop.PRODUCT_NOT_FOUND));
-        actualProduct.setDescription(product.getDescription());
-        actualProduct.setStocks(product.getStocks());
-        actualProduct.setName(product.getName());
-        actualProduct.setPrice(product.getPrice());
+        if(product.getDescription()!=null){
+            actualProduct.setDescription(product.getDescription());
+        }
+        if(product.getName()!=null){
+            actualProduct.setName(product.getName());
+        }
+        if(product.getPrice()!=null){
+            actualProduct.setPrice(product.getPrice());
+        }
+        if(product.getStocks()!=null){
+            actualProduct.setStocks(product.getStocks());
+        }
         productRepository.save(actualProduct);
     }
 

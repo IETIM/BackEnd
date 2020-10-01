@@ -23,8 +23,6 @@ public class Product {
 
     private Long stocks;
 
-    @DBRef
-    private Shop shop;
 
     public Product() {
     }
@@ -77,11 +75,4 @@ public class Product {
         this.stocks = stocks;
     }
 
-    public Shop getShop() {
-        return shop;
-    }
-
-    public void setShop(Shop shop) {
-        this.shop = shop;
-    }
 }

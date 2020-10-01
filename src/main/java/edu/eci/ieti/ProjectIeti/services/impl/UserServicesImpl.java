@@ -44,9 +44,15 @@ public class UserServicesImpl implements UserServices {
         }
         else {
             User usuarioActual=usuarioOpcional.get();
-            usuarioActual.setName(user.getName());
-            usuarioActual.setEmail(user.getEmail());
-            usuarioActual.setPassword(passwordEncoder.encode(user.getPassword()));
+            if(user.getName()!=null){
+                usuarioActual.setName(user.getName());
+            }
+            if(user.getEmail()!=null){
+                usuarioActual.setEmail(user.getEmail());
+            }
+            if(user.getPassword()!=null){
+                usuarioActual.setPassword(passwordEncoder.encode(user.getPassword()));
+            }
             userRepository.save(usuarioActual);
         }
     }
