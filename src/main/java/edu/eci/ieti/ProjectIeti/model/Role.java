@@ -1,18 +1,20 @@
 package edu.eci.ieti.ProjectIeti.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.*;
 
-@Entity
-@Table(name = "roles")
+@Document(collection = "roles")
+@TypeAlias("role")
 public class Role implements GrantedAuthority {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long id;
+    private  String id;
 
-    @Column(nullable = false,unique = true)
+    @Indexed(unique = true)
     private String role;
 
     public Role() {
@@ -23,11 +25,11 @@ public class Role implements GrantedAuthority {
         return this.role;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

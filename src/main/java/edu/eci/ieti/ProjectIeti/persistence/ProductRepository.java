@@ -1,11 +1,13 @@
 package edu.eci.ieti.ProjectIeti.persistence;
 
-import edu.eci.ieti.ProjectIeti.model.Role;
+import edu.eci.ieti.ProjectIeti.model.Product;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface RoleRepository extends MongoRepository<Role,String> {
+import java.util.List;
 
-    Role findRoleByRole(String role);
+@Repository
+public interface ProductRepository extends MongoRepository<Product,String> {
+
 }

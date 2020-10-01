@@ -27,10 +27,10 @@ public class UserController {
         }
     }
 
-    @PatchMapping("/users/{userid}")
-    public  ResponseEntity<?> updateUser(@PathVariable Long id,@RequestBody User user){
+    @PatchMapping("/users/{userId}")
+    public  ResponseEntity<?> updateUser(@PathVariable String userId,@RequestBody User user){
         try{
-            user.setId(id);
+            user.setId(userId);
             userServices.update(user);
             return new ResponseEntity<>(HttpStatus.OK);
         }

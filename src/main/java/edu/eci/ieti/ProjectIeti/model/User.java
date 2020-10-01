@@ -1,62 +1,58 @@
 package edu.eci.ieti.ProjectIeti.model;
 
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Entity
-@Table(name = "users")
+@Document(collection = "users")
+@TypeAlias("user")
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String id;
 
-    @Column(nullable = false)
-    private String correo;
+    @Indexed(unique = true)
+    private String email;
 
-    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
     private String password;
 
-    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
-    @JoinTable(name = "users_roles",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = { @JoinColumn(name = "role_id")})
+    @DBRef
     private List<Role> authorities;
 
     public User() {
         this.authorities=new ArrayList<>();
     }
 
-    public User(String correo, String username, String password) {
-        this.correo = correo;
+    public User(String email, String username, String password) {
+        this.email = email;
         this.name = username;
         this.password = password;
         this.authorities=new ArrayList<>();
 
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getCorreo() {
-        return correo;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getName() {
@@ -73,7 +69,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.correo;
+        return this.email;
     }
 
     public void setPassword(String password) {
