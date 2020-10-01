@@ -2,6 +2,7 @@ package edu.eci.ieti.ProjectIeti.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -19,6 +20,8 @@ public class Order {
     private String intent;
     private String description;
     private String shop;
+
+    @DBRef
     private List<Product> products;
 
     public Order(String shop,double price, String currency, String method, String intent, String description,List<Product> products) {

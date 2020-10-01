@@ -22,22 +22,18 @@ public class Shop {
     @DBRef
     private List<Product> products;
 
-    @DBRef
-    private Storekeeper owner;
+    private String location;
 
-    private String ubication;
-
-    private String  type;
+    private String type;
 
     private String apiClient;
 
     private String apiSecret;
 
-    public Shop(String name, List<Product> products, Storekeeper owner, String ubication, String type) {
+    public Shop(String name, List<Product> products, String location, String type) {
         this.name = name;
         this.products = products;
-        this.owner = owner;
-        this.ubication = ubication;
+        this.location = location;
         this.type = type;
     }
 
@@ -65,12 +61,12 @@ public class Shop {
         this.products = products;
     }
 
-    public String getUbication() {
-        return ubication;
+    public String getLocation() {
+        return location;
     }
 
-    public void setUbication(String ubication) {
-        this.ubication = ubication;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getType() {
@@ -97,11 +93,5 @@ public class Shop {
         this.apiSecret = apiSecret;
     }
 
-    public Storekeeper getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Storekeeper owner) {
-        this.owner = owner;
-    }
 }
+
