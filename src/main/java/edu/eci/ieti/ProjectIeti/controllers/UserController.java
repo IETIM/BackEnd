@@ -16,15 +16,6 @@ public class UserController {
     @Autowired
     private UserServices userServices;
 
-    @GetMapping("/users/{email}")
-    public ResponseEntity<?> getUserByEmail(@PathVariable String email){
-        try {
-            return new ResponseEntity<>(userServices.getUserByEmail(email),HttpStatus.OK);
-        } catch (UserException e) {
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
-        }
-    }
-
     @PostMapping("/register")
     public ResponseEntity<?> addUser(@RequestBody User user){
         try{
