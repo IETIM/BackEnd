@@ -22,20 +22,19 @@ public class Shop {
     @DBRef
     private List<Product> products;
 
-    private String location;
+    private String ubication;
 
-    private String type;
+    private String  type;
 
     private String apiClient;
 
     private String apiSecret;
 
-    public Shop(String name, List<Product> products, String location, String type) {
-        this.name = name;
-        this.products = products;
-        this.location = location;
-        this.type = type;
+    public Shop() {
+        this.products=new ArrayList<>();
+
     }
+
 
     public String getId() {
         return id;
@@ -61,12 +60,12 @@ public class Shop {
         this.products = products;
     }
 
-    public String getLocation() {
-        return location;
+    public String getUbication() {
+        return ubication;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setUbication(String ubication) {
+        this.ubication = ubication;
     }
 
     public String getType() {
@@ -92,6 +91,4 @@ public class Shop {
     public void setApiSecret(String apiSecret) {
         this.apiSecret = apiSecret;
     }
-
 }
-

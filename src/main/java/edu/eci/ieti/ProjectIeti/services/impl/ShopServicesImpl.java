@@ -1,6 +1,6 @@
 package edu.eci.ieti.ProjectIeti.services.impl;
 
-import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
+import edu.eci.ieti.ProjectIeti.Exceptions.ExceptionShop;
 import edu.eci.ieti.ProjectIeti.model.Shop;
 import edu.eci.ieti.ProjectIeti.persistence.ShopRepository;
 import edu.eci.ieti.ProjectIeti.services.ShopServices;
@@ -26,20 +26,19 @@ public class ShopServicesImpl implements ShopServices {
     }
 
     @Override
-    public Shop getShopsByName(String name) throws ShopException {
-        return shopRepository.findByName(name).orElseThrow(() -> new ShopException(ShopException.SHOP_NOT_FOUND));
+    public Shop getShopsByName(String name) throws ExceptionShop {
+        return shopRepository.findByName(name).orElseThrow(() -> new ExceptionShop(ExceptionShop.SHOP_NOT_FOUND));
     }
 
     @Override
-    public void addShop(Shop shop) throws ShopException {
+    public void addShop(Shop shop) throws ExceptionShop {
         if(shopRepository.findByName(shop.getName()).isPresent()){
-            throw new ShopException(ShopException.SHOP_REGISTERED);
+            throw new ExceptionShop(ExceptionShop.SHOP_REGISTERED);
         }
         else {
             shopRepository.save(shop);
         }
     }
-
 
 
 }

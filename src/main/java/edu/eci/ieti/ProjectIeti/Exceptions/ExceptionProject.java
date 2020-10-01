@@ -1,13 +1,13 @@
 package edu.eci.ieti.ProjectIeti.Exceptions;
 
-public class UserException extends Exception {
+public class ExceptionProject extends Exception {
     public static final String USER_REGISTERED = "User already registered" ;
     public static final String USER_NOT_FOUND = "User not found";
 
-    public UserException(){
+    public ExceptionProject(){
         super();
     }
-    public UserException(String message){
+    public ExceptionProject(String message){
         super(message);
     }
 }
