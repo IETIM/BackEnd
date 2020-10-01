@@ -4,6 +4,7 @@ import com.paypal.api.payments.Amount;
 import com.paypal.api.payments.Payment;
 import edu.eci.ieti.ProjectIeti.Exceptions.ExceptionShop;
 import edu.eci.ieti.ProjectIeti.config.PaypalConfig;
+import edu.eci.ieti.ProjectIeti.model.Order;
 import edu.eci.ieti.ProjectIeti.model.Shop;
 import edu.eci.ieti.ProjectIeti.persistence.ShopRepository;
 import edu.eci.ieti.ProjectIeti.services.PayServices;
@@ -32,32 +33,27 @@ public class PayPalServicesImpl implements PayServices {
 
 
     @Override
-    public Payment createPayment(String shop,
-                                 Double total,
-                                 String currency,
-                                 String method,
-                                 String intent,
-                                 String description,
+    public Payment createPayment(Order order,
                                  String cancelUrl,
                                  String successUrl) throws PayPalRESTException, ExceptionShop {
-        setPaymentConfiguration(shop);
+        setPaymentConfiguration(order.getShop());
         Amount amount = new Amount();
         DecimalFormat df = new DecimalFormat("#.##");
-        amount.setTotal(df.format(total));
-        amount.setCurrency(currency);
+        amount.setTotal(df.format(order.getPrice()));
+        amount.setCurrency(order.getCurrency());
 
         Transaction transaction = new Transaction();
-        transaction.setDescription(description);
+        transaction.setDescription(order.getDescription());
         transaction.setAmount(amount);
 
         List<Transaction> transactions = new ArrayList<>();
         transactions.add(transaction);
 
         Payer payer = new Payer();
-        payer.setPaymentMethod(method.toString());
+        payer.setPaymentMethod(order.getMethod());
 
         Payment payment = new Payment();
-        payment.setIntent(intent.toString());
+        payment.setIntent(order.getIntent());
         payment.setPayer(payer);
         payment.setTransactions(transactions);
         RedirectUrls redirectUrls = new RedirectUrls();
