@@ -2,7 +2,7 @@ package edu.eci.ieti.ProjectIeti.services.impl;
 
 import edu.eci.ieti.ProjectIeti.model.User;
 import edu.eci.ieti.ProjectIeti.persistence.UserRepository;
-import edu.eci.ieti.ProjectIeti.Exceptions.ExceptionProject;
+import edu.eci.ieti.ProjectIeti.Exceptions.UserException;
 import edu.eci.ieti.ProjectIeti.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,28 +19,28 @@ public class UserServicesImpl implements UserServices {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public void addUser(User user) throws ExceptionProject {
+    public void addUser(User user) throws UserException {
 
         Optional<User> optionalUser = userRepository.getUserByEmail(user.getEmail());
         if (optionalUser.isPresent()) {
-            throw new ExceptionProject(ExceptionProject.USER_REGISTERED);
+            throw new UserException(UserException.USER_REGISTERED);
         } else {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
         }
-
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        return userRepository.getUserByEmail(email).get();
+    public User getUserByEmail(String email) throws UserException {
+
+        return userRepository.getUserByEmail(email).orElseThrow(() -> new UserException(UserException.USER_NOT_FOUND));
     }
 
     @Override
-    public void update(User user) throws ExceptionProject {
+    public void update(User user) throws UserException {
         Optional<User> usuarioOpcional=userRepository.findById(user.getId());
         if(!usuarioOpcional.isPresent()){
-            throw new ExceptionProject(ExceptionProject.USER_NOT_FOUND);
+            throw new UserException(UserException.USER_NOT_FOUND);
         }
         else {
             User usuarioActual=usuarioOpcional.get();

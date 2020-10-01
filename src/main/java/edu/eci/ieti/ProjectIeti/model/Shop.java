@@ -22,6 +22,9 @@ public class Shop {
     @DBRef
     private List<Product> products;
 
+    @DBRef
+    private Storekeeper owner;
+
     private String ubication;
 
     private String  type;
@@ -30,11 +33,13 @@ public class Shop {
 
     private String apiSecret;
 
-    public Shop() {
-        this.products=new ArrayList<>();
-
+    public Shop(String name, List<Product> products, Storekeeper owner, String ubication, String type) {
+        this.name = name;
+        this.products = products;
+        this.owner = owner;
+        this.ubication = ubication;
+        this.type = type;
     }
-
 
     public String getId() {
         return id;
@@ -90,5 +95,13 @@ public class Shop {
 
     public void setApiSecret(String apiSecret) {
         this.apiSecret = apiSecret;
+    }
+
+    public Storekeeper getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Storekeeper owner) {
+        this.owner = owner;
     }
 }

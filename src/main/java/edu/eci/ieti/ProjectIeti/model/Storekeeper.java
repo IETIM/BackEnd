@@ -5,14 +5,13 @@ import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-@Document(collection = "users")
-@TypeAlias("user")
-public class User implements UserDetails {
+@Document(collection = "storekeepers")
+@TypeAlias("storekeeper")
+public class Storekeeper{
 
     @Id
     private String id;
@@ -24,19 +23,23 @@ public class User implements UserDetails {
 
     private String password;
 
+    private int cellphone;
+
+    @DBRef
+    private List<Order> orders;
+
     @DBRef
     private List<Role> authorities;
 
-    public User() {
-        this.authorities=new ArrayList<>();
+    public Storekeeper() {
+        this.authorities= new ArrayList<>();
     }
 
-    public User(String email, String username, String password) {
+    public Storekeeper(String id, String email, String name, String password, int cellphone, List<Shop> shops) {
         this.email = email;
-        this.name = username;
+        this.name = name;
         this.password = password;
-        this.authorities=new ArrayList<>();
-
+        this.cellphone = cellphone;
     }
 
     public String getId() {
@@ -67,41 +70,17 @@ public class User implements UserDetails {
         return password;
     }
 
-    @Override
-    public String getUsername() {
-        return this.email;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
+    public int getCellphone() {
+        return cellphone;
     }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
+    public void setCellphone(int cellphone) {
+        this.cellphone = cellphone;
     }
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
 
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
-    @Override
-    public Collection<? extends Role> getAuthorities() {
-        return this.authorities;
-    }
-
-    public void setAuthorities(List<Role> authorities) {
-        this.authorities = authorities;
-    }
 }

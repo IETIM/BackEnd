@@ -2,7 +2,7 @@ package edu.eci.ieti.ProjectIeti.services.impl;
 
 import com.paypal.api.payments.Amount;
 import com.paypal.api.payments.Payment;
-import edu.eci.ieti.ProjectIeti.Exceptions.ExceptionShop;
+import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
 import edu.eci.ieti.ProjectIeti.config.PaypalConfig;
 import edu.eci.ieti.ProjectIeti.model.Shop;
 import edu.eci.ieti.ProjectIeti.persistence.ShopRepository;
@@ -39,7 +39,7 @@ public class PayPalServicesImpl implements PayServices {
                                  String intent,
                                  String description,
                                  String cancelUrl,
-                                 String successUrl) throws PayPalRESTException, ExceptionShop {
+                                 String successUrl) throws PayPalRESTException, ShopException {
         setPaymentConfiguration(shop);
         Amount amount = new Amount();
         DecimalFormat df = new DecimalFormat("#.##");
@@ -83,9 +83,9 @@ public class PayPalServicesImpl implements PayServices {
         return bd.doubleValue();
     }
 
-    private void setPaymentConfiguration(String shop) throws PayPalRESTException, ExceptionShop {
+    private void setPaymentConfiguration(String shop) throws PayPalRESTException, ShopException {
         PaypalConfig pc = new PaypalConfig();
-        Shop tr = tiendaRepository.findByName(shop).orElseThrow(() -> new ExceptionShop(ExceptionShop.SHOP_NOT_FOUND));
+        Shop tr = tiendaRepository.findByName(shop).orElseThrow(() -> new ShopException(ShopException.SHOP_NOT_FOUND));
         String c="AQHEkaz_E0vSsZxJ6hF8pHnr8G1TZvKEKeT-G4r218xQJk0ckMCpz93ZJQXaIfPqcx5yatSBDsoIZiXc";
         String s = "EFdNXWp0xMkxRR65fEoMJif2fNVjv7pQieNVt3JxoQtn9LlGYnC_922IQ33AhLW5nKesELDEt4JS_VAq";
         pc.setClientId(tr.getApiClient());
