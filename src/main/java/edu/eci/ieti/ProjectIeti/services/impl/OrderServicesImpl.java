@@ -1,6 +1,6 @@
 package edu.eci.ieti.ProjectIeti.services.impl;
 
-import edu.eci.ieti.ProjectIeti.Exceptions.ExceptionShop;
+import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
 import edu.eci.ieti.ProjectIeti.model.Order;
 import edu.eci.ieti.ProjectIeti.persistence.OrderRepository;
 import edu.eci.ieti.ProjectIeti.services.OrderServices;
@@ -22,9 +22,9 @@ public class OrderServicesImpl implements OrderServices {
     }
 
     @Override
-    public Order getOrder(String orderId) throws ExceptionShop {
+    public Order getOrder(String orderId) throws ShopException {
         Optional<Order> o =  orderRepository.findById(orderId);
-        Order ord = o.orElseThrow(() -> new ExceptionShop(ExceptionShop.ORDER_NOT_FOUND));
+        Order ord = o.orElseThrow(() -> new ShopException(ShopException.ORDER_NOT_FOUND));
         return ord;
     }
 

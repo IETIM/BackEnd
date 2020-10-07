@@ -14,6 +14,7 @@ import java.util.List;
 public class Order {
     @Id
     private String id;
+    @DBRef
     private ArrayList<Product> products;
     private double price;
     private String currency;
@@ -22,9 +23,6 @@ public class Order {
     private String description;
     private String shop;
     private String state;
-
-    @DBRef
-    private List<Product> products;
 
     public Order(String shop,double price, String currency, String method, String intent, String description,List<Product> products) {
         this.shop = shop;
