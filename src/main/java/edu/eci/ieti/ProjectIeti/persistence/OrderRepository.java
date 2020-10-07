@@ -1,16 +1,17 @@
 package edu.eci.ieti.ProjectIeti.persistence;
 
-import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
 import edu.eci.ieti.ProjectIeti.model.Order;
-import edu.eci.ieti.ProjectIeti.model.Shop;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Optional;
 
-@Repository
 public interface OrderRepository extends MongoRepository<Order,String> {
+    @Override
+    Optional<Order> findById(String s);
 
-    List<Order> findAllByShop(Shop shop) throws ShopException;
+    @Override
+    void deleteById(String s);
+
+    @Override
+    <S extends Order> S insert(S s);
 }
-

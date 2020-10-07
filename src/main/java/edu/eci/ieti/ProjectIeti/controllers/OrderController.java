@@ -23,4 +23,9 @@ public class OrderController {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
         }
     }
+    @PostMapping(value = "/new")
+    public ResponseEntity<?> newOrder(@RequestBody Order order){
+        return new ResponseEntity<>(orderServices.createOrder(order),HttpStatus.CREATED);
+    }
 }
+

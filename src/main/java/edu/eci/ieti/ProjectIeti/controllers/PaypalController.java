@@ -2,6 +2,7 @@ package edu.eci.ieti.ProjectIeti.controllers;
 
 import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
 import edu.eci.ieti.ProjectIeti.model.Order;
+import edu.eci.ieti.ProjectIeti.services.OrderServices;
 import edu.eci.ieti.ProjectIeti.services.PayServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,18 +20,20 @@ public class PaypalController {
 
     @Autowired
     PayServices service;
+    @Autowired
+    OrderServices orderServices;
 
     public static final String SUCCESS_URL = "pay/success";
     public static final String CANCEL_URL = "pay/cancel";
 
     @PostMapping("/pay")
-    public String payment(@ModelAttribute("order") Order order) {
+    public String payment(String orderId) {
         try {
+            Order order = orderServices.getOrder(orderId);
             // SUCCESS AND CANCEL URL = DOMAIN+SECCESS_URL / CANCEL_URL
             System.out.println("MODOFOKIU LA CURRENCY ------------>" + order.getCurrency());
             System.out.println("MODOFOKIU EL PRICE ------------>" + order.getPrice());
-            Payment payment = service.createPayment(order.getShop(),order.getPrice(), order.getCurrency(), order.getMethod(),
-                    order.getIntent(), order.getDescription(), "https://www.stanford.edu/",
+            Payment payment = service.createPayment(order, "https://www.stanford.edu/",
                     "https://www.w3schools.com/");
 
             for(Links link:payment.getLinks()) {

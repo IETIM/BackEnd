@@ -1,14 +1,16 @@
 package edu.eci.ieti.ProjectIeti.services;
 
-import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
+import edu.eci.ieti.ProjectIeti.Exceptions.ExceptionShop;
 import edu.eci.ieti.ProjectIeti.model.Order;
-import edu.eci.ieti.ProjectIeti.model.Shop;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface OrderServices {
+    public Order createOrder(Order o);
 
+    public Order getOrder(String orderId) throws ExceptionShop;
 
-    List<Order> getOrdersByShop(String shop) throws ShopException;
+    public void payOrder(String orderId);
+
 
 }
