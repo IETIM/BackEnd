@@ -21,6 +21,10 @@ public class OrderController {
     public ResponseEntity<?> newOrder(@RequestBody Order order){
         return new ResponseEntity<>(orderServices.createOrder(order),HttpStatus.CREATED);
     }
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<?> newOrder(@PathVariable String id) throws ExceptionShop {
+        return new ResponseEntity<>(orderServices.getOrder(id),HttpStatus.OK);
+    }
 
 
 }
