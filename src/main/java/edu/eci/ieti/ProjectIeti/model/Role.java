@@ -15,14 +15,14 @@ public class Role implements GrantedAuthority {
     private  String id;
 
     @Indexed(unique = true)
-    private String role;
+    private ERole role;
 
     public Role() {
 
     }
     @Override
     public String getAuthority() {
-        return this.role;
+        return this.role.toString();
     }
 
     public String getId() {
@@ -33,11 +33,11 @@ public class Role implements GrantedAuthority {
         this.id = id;
     }
 
-    public String getRole() {
+    public ERole getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(ERole role) {
         this.role = role;
     }
 
