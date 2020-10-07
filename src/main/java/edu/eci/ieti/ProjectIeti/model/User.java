@@ -96,6 +96,7 @@ public class User implements UserDetails {
         return true;
     }
 
+
     @Override
     public Collection<? extends Role> getAuthorities() {
         return this.authorities;

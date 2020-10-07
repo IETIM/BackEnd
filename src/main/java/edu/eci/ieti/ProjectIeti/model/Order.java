@@ -2,10 +2,7 @@ package edu.eci.ieti.ProjectIeti.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.List;
 
 
 @Document(collection = "orders")
@@ -21,16 +18,14 @@ public class Order {
     private String description;
     private String shop;
 
-    @DBRef
-    private List<Product> products;
-
-    public Order(String shop,double price, String currency, String method, String intent, String description,List<Product> products) {
+    public Order(String shop,double price, String currency, String method, String intent, String description) {
         this.shop = shop;
+        this.price = price;
         this.currency = currency;
         this.method = method;
         this.intent = intent;
         this.description = description;
-        this.products = products;
+
     }
 
     public Order() {
@@ -82,13 +77,5 @@ public class Order {
 
     public void setShop(String shop) {
         this.shop = shop;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
     }
 }

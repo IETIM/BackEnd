@@ -1,7 +1,7 @@
 package edu.eci.ieti.ProjectIeti.controllers;
 
 
-import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
+import edu.eci.ieti.ProjectIeti.Exceptions.ExceptionShop;
 import edu.eci.ieti.ProjectIeti.model.Shop;
 import edu.eci.ieti.ProjectIeti.services.ShopServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class ShopController {
     public ResponseEntity<?> getShopByName(@PathVariable String name){
         try {
             return new ResponseEntity<>(shopServices.getShopsByName(name), HttpStatus.ACCEPTED);
-        } catch (ShopException e) {
+        } catch (ExceptionShop e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
         }
     }
@@ -39,11 +39,11 @@ public class ShopController {
         return new ResponseEntity<>(shops, HttpStatus.ACCEPTED);
     }
     @PostMapping()
-    public ResponseEntity<?> addShop(@RequestBody Shop shop){
+    public ResponseEntity<?>addShop(@RequestBody Shop shop){
         try {
             shopServices.addShop(shop);
             return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (ShopException e) {
+        } catch (ExceptionShop e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
         }
 

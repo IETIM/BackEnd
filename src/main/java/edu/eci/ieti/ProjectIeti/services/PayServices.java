@@ -2,7 +2,7 @@ package edu.eci.ieti.ProjectIeti.services;
 
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
-import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
+import edu.eci.ieti.ProjectIeti.Exceptions.ExceptionShop;
 
 public interface PayServices {
     Payment createPayment(String shop,
@@ -12,7 +12,7 @@ public interface PayServices {
                           String intent,
                           String description,
                           String cancelUrl,
-                          String successUrl) throws PayPalRESTException, ShopException;
+                          String successUrl) throws PayPalRESTException, ExceptionShop;
 
     Payment executePayment(String paymentId, String payerId) throws PayPalRESTException;
 

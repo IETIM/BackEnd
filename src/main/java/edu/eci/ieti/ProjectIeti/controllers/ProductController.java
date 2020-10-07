@@ -1,6 +1,6 @@
 package edu.eci.ieti.ProjectIeti.controllers;
 
-import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
+import edu.eci.ieti.ProjectIeti.Exceptions.ExceptionShop;
 import edu.eci.ieti.ProjectIeti.model.Product;
 import edu.eci.ieti.ProjectIeti.services.ProductServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/products")
+@RequestMapping(value = "/shops")
 public class ProductController {
 
     @Autowired
@@ -20,7 +20,7 @@ public class ProductController {
     public ResponseEntity<?> getProductsByShop(@PathVariable String idShop){
         try {
             return ResponseEntity.ok(productServices.getProducts(idShop));
-        } catch (ShopException e) {
+        } catch (ExceptionShop e) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -30,7 +30,7 @@ public class ProductController {
         try {
             productServices.addProduct(product,idShop);
             return new ResponseEntity<>(HttpStatus.CREATED);
-        }catch (ShopException e){
+        }catch (ExceptionShop e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
@@ -42,7 +42,7 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.OK);
 
 
-        }catch (ShopException e){
+        }catch (ExceptionShop e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
@@ -52,7 +52,7 @@ public class ProductController {
         try{
             productServices.deleteProduct(idProduct);
             return new ResponseEntity<>(HttpStatus.OK);
-        }catch (ShopException e){
+        }catch (ExceptionShop e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
