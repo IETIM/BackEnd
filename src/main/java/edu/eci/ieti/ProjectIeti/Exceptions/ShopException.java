@@ -1,14 +1,14 @@
 package edu.eci.ieti.ProjectIeti.Exceptions;
 
-public class ExceptionShop extends Exception {
+public class ShopException extends Exception {
     public static final String SHOP_NOT_FOUND = "Shop not found" ;
     public static final String PRODUCT_NOT_FOUND= "Product not found";
     public static final String SHOP_REGISTERED= "Shop already registered";
 
-    public ExceptionShop(){
+    public ShopException(){
         super();
     }
-    public ExceptionShop(String message){
+    public ShopException(String message){
         super(message);
     }
 }

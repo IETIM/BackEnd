@@ -1,6 +1,6 @@
 package edu.eci.ieti.ProjectIeti.controllers;
 
-import edu.eci.ieti.ProjectIeti.Exceptions.ExceptionShop;
+import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
 import edu.eci.ieti.ProjectIeti.model.Order;
 import edu.eci.ieti.ProjectIeti.services.PayServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class PaypalController {
                 }
             }
 
-        } catch (PayPalRESTException | ExceptionShop e) {
+        } catch (PayPalRESTException | ShopException e) {
 
             e.printStackTrace();
         }
