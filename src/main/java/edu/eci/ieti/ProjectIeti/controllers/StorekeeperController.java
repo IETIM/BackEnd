@@ -1,5 +1,6 @@
 package edu.eci.ieti.ProjectIeti.controllers;
 
+import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
 import edu.eci.ieti.ProjectIeti.Exceptions.UserException;
 import edu.eci.ieti.ProjectIeti.model.Storekeeper;
 import edu.eci.ieti.ProjectIeti.services.StorekeeperServices;
@@ -15,17 +16,17 @@ public class StorekeeperController {
     @Autowired
     private StorekeeperServices storekeeperServices;
 
-    @PostMapping("/storekeeper/register")
+    @PostMapping("/register")
     public ResponseEntity<?> addUser(@RequestBody Storekeeper user){
         try{
             storekeeperServices.addStorekeeper(user);
             return new ResponseEntity<>(user, HttpStatus.CREATED);
-        }catch (UserException e){
+        }catch (UserException | ShopException e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PatchMapping("/storekeeper/{userId}")
+    @PatchMapping("/{userId}")
     public  ResponseEntity<?> updateUser(@PathVariable String userId,@RequestBody Storekeeper user){
         try{
             user.setId(userId);
@@ -35,6 +36,5 @@ public class StorekeeperController {
         catch (UserException e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
-
     }
 }

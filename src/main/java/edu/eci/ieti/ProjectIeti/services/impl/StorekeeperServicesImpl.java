@@ -1,11 +1,16 @@
 package edu.eci.ieti.ProjectIeti.services.impl;
 
+import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
 import edu.eci.ieti.ProjectIeti.Exceptions.UserException;
 import edu.eci.ieti.ProjectIeti.model.Storekeeper;
+import edu.eci.ieti.ProjectIeti.model.User;
 import edu.eci.ieti.ProjectIeti.persistence.OrderRepository;
+import edu.eci.ieti.ProjectIeti.persistence.ShopRepository;
 import edu.eci.ieti.ProjectIeti.persistence.StorekeeperRepository;
+import edu.eci.ieti.ProjectIeti.services.ShopServices;
 import edu.eci.ieti.ProjectIeti.services.StorekeeperServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,13 +22,22 @@ public class StorekeeperServicesImpl implements StorekeeperServices {
     private StorekeeperRepository storekeeperRepository;
 
     @Autowired
-    private OrderRepository orderRepository;
+    private ShopServices shopServices;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public void addStorekeeper(Storekeeper user) throws UserException {
-        Optional<Storekeeper> findStorekeeper =storekeeperRepository.findById(user.getEmail());
-        Storekeeper storekeeper = findStorekeeper.orElseThrow(() -> new UserException(UserException.USER_REGISTERED));
-        storekeeperRepository.save(storekeeper);
+    public void addStorekeeper(Storekeeper user) throws UserException, ShopException {
+        Optional<Storekeeper> findStorekeeper = storekeeperRepository.getStorekeeperByEmail(user.getEmail());
+        if (findStorekeeper.isPresent()) {
+            throw new UserException(UserException.USER_REGISTERED);
+        } else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            shopServices.addShop(user.getShop());
+            storekeeperRepository.save(user);
+
+        }
     }
 
     @Override
@@ -48,8 +62,6 @@ public class StorekeeperServicesImpl implements StorekeeperServices {
             actualStoreK.setPassword(user.getPassword());
         }
         storekeeperRepository.save(actualStoreK);
-
     }
-
-
 }
+

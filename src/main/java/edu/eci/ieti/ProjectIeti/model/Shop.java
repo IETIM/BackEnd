@@ -30,6 +30,10 @@ public class Shop {
 
     private String apiSecret;
 
+    public Shop() {
+        this.products = new ArrayList<>();
+    }
+
     public Shop(String name, List<Product> products, String location, String type) {
         this.name = name;
         this.products = products;
