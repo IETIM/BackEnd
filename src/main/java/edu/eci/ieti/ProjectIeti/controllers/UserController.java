@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @CrossOrigin(origins="*")
 @RestController
 @RequestMapping(value = "/")
@@ -40,10 +43,14 @@ public class UserController {
 
     }
 
-    @GetMapping(path = "/{token}")
-    public ResponseEntity<?> getRole(@PathVariable Authentication token){
-        return ResponseEntity.ok(token.getAuthorities());
+    @GetMapping("/role")
+    public List<String> getRole(Authentication token){
+        List<String> roles = new ArrayList<>();
+        token.getAuthorities().forEach(e -> roles.add(e.toString()) );
+        
+        return roles;
     }
+
     @GetMapping(path="/username")
     public ResponseEntity<?> getUsername(Authentication auth){
         return new ResponseEntity<>(auth.getName(),HttpStatus.OK);
