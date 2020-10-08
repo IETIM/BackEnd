@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,11 +43,10 @@ public class UserController {
     }
 
     @GetMapping("/role")
-    public List<String> getRole(Authentication token){
+    public ResponseEntity<?> getRole(Authentication token){
         List<String> roles = new ArrayList<>();
-        token.getAuthorities().forEach(e -> roles.add(e.toString()) );
-        
-        return roles;
+        token.getAuthorities().forEach(e -> roles.add(e.toString()));
+        return ResponseEntity.ok(roles);
     }
 
     @GetMapping(path="/username")

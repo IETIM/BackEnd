@@ -51,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
         httpSecurity.csrf().disable().cors().and()
 
                 .authorizeRequests()
-                .antMatchers("/login","/register","/users/*","/storekeeper/register").permitAll()
+                .antMatchers("/login","/register","/users/*","/storekeeper/register","/role").permitAll()
                 .antMatchers(HttpMethod.GET,"/products/*","/shops","/shops/*").permitAll()
                 .antMatchers(HttpMethod.GET,"/storekeeper","/storekeeper/*").hasAnyRole("TENDERO")
                 .antMatchers(HttpMethod.POST,"/products/*","/shops/*").hasAnyRole("TENDERO")
