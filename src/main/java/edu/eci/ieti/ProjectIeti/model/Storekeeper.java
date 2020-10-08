@@ -11,7 +11,7 @@ import java.util.List;
 
 @Document(collection = "storekeepers")
 @TypeAlias("storekeeper")
-public class Storekeeper {
+public class Storekeeper{
 
     @Id
     private String id;
@@ -24,9 +24,6 @@ public class Storekeeper {
     private String password;
 
     private int cellphone;
-
-    @DBRef
-    private List<Order> orders;
 
     @DBRef
     private Shop shop;
@@ -80,14 +77,6 @@ public class Storekeeper {
 
     public void setCellphone(int cellphone) {
         this.cellphone = cellphone;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
     }
 
     public Shop getShop() {

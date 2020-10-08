@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/storekeeper")
@@ -39,8 +41,13 @@ public class StorekeeperController {
         }
     }
 
-    @GetMapping()
-    public void getStorekeeperByToken(Authentication token){
-        //System.out.println("TOKEEN" + Jwt.decode(token));
+    @GetMapping("/{email}")
+    public ResponseEntity<?> getStorekeeperById(@PathVariable String email){
+        try{
+            return ResponseEntity.ok(storekeeperServices.getStorekeeperByEmail(email));
+        }
+        catch (UserException e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
     }
 }
