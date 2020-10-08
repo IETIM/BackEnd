@@ -30,31 +30,37 @@ public class ProductServicesImpl implements ProductServices {
     }
 
     @Override
-    public void addProduct(Product product, String idTienda) throws ShopException {
+    public Product addProduct(Product product, String idTienda) throws ShopException {
         Optional<Shop> findShop = shopRepository.findById(idTienda);
         Shop shop =findShop.orElseThrow(() -> new ShopException(ShopException.SHOP_NOT_FOUND));
         productRepository.save(product);
         shop.getProducts().add(product);
         shopRepository.save(shop);
+        return product;
     }
 
     @Override
-    public void updateProduct(Product product, String idProduct) throws ShopException {
+    public Product updateProduct(Product product, String idProduct) throws ShopException {
         Optional<Product> optionalProduct= productRepository.findById(idProduct);
         Product actualProduct = optionalProduct.orElseThrow(() -> new ShopException(ShopException.PRODUCT_NOT_FOUND));
-        if(product.getDescription()!=null){
+
+        if(product.getDescription()!=null && !product.getCategory().equals("")){
             actualProduct.setDescription(product.getDescription());
         }
-        if(product.getName()!=null){
+        if(product.getName()!=null && !product.getName().equals("")){
             actualProduct.setName(product.getName());
         }
-        if(product.getPrice()!=null){
+        if(product.getPrice()!=null ){
             actualProduct.setPrice(product.getPrice());
         }
         if(product.getStocks()!=null){
             actualProduct.setStocks(product.getStocks());
         }
+        if(product.getCategory()!=null && !product.getCategory().equals("")){
+            actualProduct.setCategory(product.getCategory());
+        }
         productRepository.save(actualProduct);
+        return actualProduct;
     }
 
     @Override
