@@ -58,24 +58,10 @@ public class UserServicesImpl implements UserServices {
         }
     }
 
-    @Override
-    public Role getRole(String email) throws UserException {
-
-        Optional<User> usuarioOpcional = userRepository.getUserByEmail(email);
-        if(!usuarioOpcional.isPresent()){
-            throw new UserException(UserException.USER_NOT_FOUND);
-        }else{
-            User realUser = usuarioOpcional.get();
-            List<Role> authorities = (List<Role>) realUser.getAuthorities();
-            return authorities.get(0);
-        }
-
-    }
 
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-
 
 }

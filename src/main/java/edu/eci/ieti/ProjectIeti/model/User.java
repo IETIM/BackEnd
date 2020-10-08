@@ -36,7 +36,6 @@ public class User implements UserDetails {
         this.name = username;
         this.password = password;
         this.authorities=new ArrayList<>();
-
     }
 
     public String getId() {

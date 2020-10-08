@@ -10,7 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
-@RestController
+@RestController(origins="*")
 @RequestMapping(value = "/")
 public class UserController {
 

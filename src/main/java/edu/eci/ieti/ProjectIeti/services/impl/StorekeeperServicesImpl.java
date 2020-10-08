@@ -2,6 +2,8 @@ package edu.eci.ieti.ProjectIeti.services.impl;
 
 import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
 import edu.eci.ieti.ProjectIeti.Exceptions.UserException;
+import edu.eci.ieti.ProjectIeti.model.ERole;
+import edu.eci.ieti.ProjectIeti.model.Role;
 import edu.eci.ieti.ProjectIeti.model.Storekeeper;
 import edu.eci.ieti.ProjectIeti.model.User;
 import edu.eci.ieti.ProjectIeti.persistence.OrderRepository;
@@ -9,10 +11,13 @@ import edu.eci.ieti.ProjectIeti.persistence.ShopRepository;
 import edu.eci.ieti.ProjectIeti.persistence.StorekeeperRepository;
 import edu.eci.ieti.ProjectIeti.services.ShopServices;
 import edu.eci.ieti.ProjectIeti.services.StorekeeperServices;
+import edu.eci.ieti.ProjectIeti.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,6 +30,9 @@ public class StorekeeperServicesImpl implements StorekeeperServices {
     private ShopServices shopServices;
 
     @Autowired
+    private UserServices userServices;
+
+    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     @Override
@@ -35,8 +43,14 @@ public class StorekeeperServicesImpl implements StorekeeperServices {
         } else {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             shopServices.addShop(user.getShop());
+            User newUser = new User(user.getEmail(),user.getName(),user.getPassword());
+            List<Role> roles = new ArrayList();
+            Role rol = new Role();
+            rol.setRole(ERole.ROLE_TENDERO);
+            roles.add(rol);
+            newUser.setAuthorities(roles);
             storekeeperRepository.save(user);
-
+            userServices.addUser(newUser);
         }
     }
 

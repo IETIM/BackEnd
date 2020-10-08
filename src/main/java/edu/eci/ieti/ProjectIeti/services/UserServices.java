@@ -14,8 +14,6 @@ public interface UserServices {
 
      void update (User user)throws UserException;
 
-     Role getRole (String userId) throws UserException;
-
      List<User> getAllUsers();
 
 
