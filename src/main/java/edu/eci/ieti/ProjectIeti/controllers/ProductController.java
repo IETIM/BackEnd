@@ -16,7 +16,8 @@ public class ProductController {
     @Autowired
     private ProductServices productServices;
 
-    @GetMapping(path = "/{idShop}/products")
+
+    @GetMapping(path = "/{idShop}")
     public ResponseEntity<?> getProductsByShop(@PathVariable String idShop){
         try {
             return ResponseEntity.ok(productServices.getProducts(idShop));
@@ -25,7 +26,7 @@ public class ProductController {
         }
     }
 
-    @PostMapping(value = "/{idShop}/products")
+    @PostMapping(value = "/{idShop}")
     public ResponseEntity<?> addProduct(@RequestBody Product product, @PathVariable String idShop){
         try {
             productServices.addProduct(product,idShop);
@@ -35,7 +36,7 @@ public class ProductController {
         }
     }
 
-    @PatchMapping(value = "/products/{idProduct}")
+    @PatchMapping(value = "/{idProduct}")
     public ResponseEntity<?> updateProduct(@RequestBody Product product, @PathVariable String idProduct){
         try{
             productServices.updateProduct(product,idProduct);
@@ -47,7 +48,7 @@ public class ProductController {
         }
     }
 
-    @DeleteMapping(value = "products/{idProduct}")
+    @DeleteMapping(value = "/{idProduct}")
     public ResponseEntity<?> deleteProduct(@PathVariable String idProduct){
         try{
             productServices.deleteProduct(idProduct);

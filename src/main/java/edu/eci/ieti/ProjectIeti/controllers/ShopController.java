@@ -46,6 +46,5 @@ public class ShopController {
         } catch (ShopException e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
         }
-
     }
 }

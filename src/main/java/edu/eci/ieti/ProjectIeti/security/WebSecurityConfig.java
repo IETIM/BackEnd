@@ -52,10 +52,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
         httpSecurity.csrf().disable().cors().and()
 
                 .authorizeRequests()
-                .antMatchers("/login","/register").permitAll()
-                .antMatchers(HttpMethod.GET,"/product/*","/tiendas").permitAll()
-                .antMatchers(HttpMethod.POST,"/product/*").hasAnyRole("TENDERO")
-                .antMatchers(HttpMethod.PUT,"/product/*").hasAnyRole("TENDERO")
+                .antMatchers("/login","/register","/users/*","/storekeeper/register").permitAll()
+                .antMatchers(HttpMethod.GET,"/products/*","/shops","/shops/*").permitAll()
+                .antMatchers(HttpMethod.POST,"/products/*","/shops/*").hasAnyRole("TENDERO")
+                .antMatchers(HttpMethod.PUT,"/products/*").hasAnyRole("TENDERO")
                 .antMatchers("/profile").hasAnyRole("TENDERO","USER")
                 .anyRequest().authenticated().and().
 

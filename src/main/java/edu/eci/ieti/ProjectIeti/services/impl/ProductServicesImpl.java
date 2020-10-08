@@ -31,7 +31,7 @@ public class ProductServicesImpl implements ProductServices {
 
     @Override
     public void addProduct(Product product, String idTienda) throws ShopException {
-        Optional<Shop> findShop =shopRepository.findById(idTienda);
+        Optional<Shop> findShop = shopRepository.findById(idTienda);
         Shop shop =findShop.orElseThrow(() -> new ShopException(ShopException.SHOP_NOT_FOUND));
         productRepository.save(product);
         shop.getProducts().add(product);

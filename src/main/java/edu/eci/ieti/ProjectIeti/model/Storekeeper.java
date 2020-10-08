@@ -29,17 +29,17 @@ public class Storekeeper {
     private List<Order> orders;
 
     @DBRef
-    private List<Shop> shops;
+    private Shop shop;
 
     public Storekeeper() {
     }
 
-    public Storekeeper(String id, String email, String name, String password, int cellphone, List<Shop> shops) {
+    public Storekeeper(String id, String email, String name, String password, int cellphone, Shop shop) {
         this.email = email;
         this.name = name;
         this.password = password;
         this.cellphone = cellphone;
-        this.shops = shops;
+        this.shop = shop;
     }
 
     public String getId() {
@@ -90,11 +90,12 @@ public class Storekeeper {
         this.orders = orders;
     }
 
-    public List<Shop> getShops() {
-        return shops;
+    public Shop getShop() {
+        return shop;
     }
 
-    public void setShops(List<Shop> shops) {
-        this.shops = shops;
+    public void setShop(Shop shop) {
+        this.shop = shop;
     }
 }
+
