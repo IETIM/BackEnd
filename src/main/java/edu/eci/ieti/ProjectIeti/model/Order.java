@@ -15,7 +15,7 @@ public class Order {
     @Id
     private String id;
     @DBRef
-    private ArrayList<Tuple<String,Integer>> products;
+    private ArrayList<Purchase> purchases;
     private double total;
     private String currency;
     private String method;
@@ -24,7 +24,7 @@ public class Order {
     private String store;
     private String state;
 
-    public Order(String store,double total, String currency, String method, String intent, String description,List<Tuple<String,Integer>> products) {
+    public Order(String store,double total, String currency, String method, String intent, String description,List<Purchase> purchases) {
         this.store = store;
         this.currency = currency;
         this.method = method;
@@ -32,6 +32,7 @@ public class Order {
         this.description = description;
         this.state = "not payed";
         this.total = total;
+        this.purchases = (ArrayList<Purchase>) purchases;
     }
 
     public Order() {
@@ -93,12 +94,12 @@ public class Order {
         this.id = id;
     }
 
-    public ArrayList<Tuple<String,Integer>> getProducts() {
-        return products;
+    public ArrayList<Purchase> getPurchases() {
+        return purchases;
     }
 
-    public void setProducts(ArrayList<Tuple<String,Integer>> products) {
-        this.products = products;
+    public void setPurchases(ArrayList<Purchase> purchases) {
+        this.purchases = purchases;
     }
 
     public String getState() {

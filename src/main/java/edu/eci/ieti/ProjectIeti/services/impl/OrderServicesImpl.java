@@ -3,9 +3,10 @@ package edu.eci.ieti.ProjectIeti.services.impl;
 import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
 import edu.eci.ieti.ProjectIeti.model.Order;
 import edu.eci.ieti.ProjectIeti.model.Product;
-import edu.eci.ieti.ProjectIeti.model.Tuple;
+import edu.eci.ieti.ProjectIeti.model.Purchase;
 import edu.eci.ieti.ProjectIeti.persistence.OrderRepository;
 import edu.eci.ieti.ProjectIeti.persistence.ProductRepository;
+import edu.eci.ieti.ProjectIeti.persistence.PurchaseRepository;
 import edu.eci.ieti.ProjectIeti.services.OrderServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,12 +21,16 @@ public class OrderServicesImpl implements OrderServices {
     OrderRepository orderRepository;
     @Autowired
     ProductRepository productRepository;
+    @Autowired
+    PurchaseRepository purchaseRepository;
+
 
     @Override
     public Order createOrder(Order o) {
-        double total= calculatePrice(o.getProducts());
+        ArrayList<Purchase> purchases = o.getPurchases();
+        double total= calculatePrice(purchases);
         o.setTotal(total);
-
+        purchaseRepository.saveAll(purchases);
         return orderRepository.save(o);
     }
 
@@ -38,14 +43,14 @@ public class OrderServicesImpl implements OrderServices {
 
     @Override
     public void payOrder(String orderId) {
-
     }
 
-    private double calculatePrice(ArrayList<Tuple<String,Integer>> products) {
+
+    private double calculatePrice(ArrayList<Purchase> products) {
         double total = 0;
-        for (Tuple<String,Integer> p: products){
-            Product pOriginal = productRepository.findById(p.getElem1()).get();
-            total+= p.getElem2() * pOriginal.getPrice();
+        for (Purchase p: products){
+            Product pOriginal = productRepository.findById(p.getProductId()).get();
+            total+= p.getQuantity() * pOriginal.getPrice();
         }
         return total;
     }
