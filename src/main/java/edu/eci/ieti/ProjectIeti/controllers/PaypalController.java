@@ -32,7 +32,7 @@ public class PaypalController {
             Order order = orderServices.getOrder(orderId);
             // SUCCESS AND CANCEL URL = DOMAIN+SECCESS_URL / CANCEL_URL
             System.out.println("MODOFOKIU LA CURRENCY ------------>" + order.getCurrency());
-            System.out.println("MODOFOKIU EL PRICE ------------>" + order.getPrice());
+            System.out.println("MODOFOKIU EL PRICE ------------>" + order.getTotal());
             Payment payment = service.createPayment(order, "https://www.stanford.edu/",
                     "https://www.w3schools.com/");
 

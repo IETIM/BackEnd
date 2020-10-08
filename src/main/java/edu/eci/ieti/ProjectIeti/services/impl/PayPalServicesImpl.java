@@ -39,7 +39,7 @@ public class PayPalServicesImpl implements PayServices {
         setPaymentConfiguration(order.getShop());
         Amount amount = new Amount();
         DecimalFormat df = new DecimalFormat("#.##");
-        amount.setTotal(df.format(order.getPrice()));
+        amount.setTotal(df.format(order.getTotal()));
         amount.setCurrency(order.getCurrency());
 
         Transaction transaction = new Transaction();

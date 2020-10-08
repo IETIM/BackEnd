@@ -15,52 +15,37 @@ public class Order {
     @Id
     private String id;
     @DBRef
-    private ArrayList<Product> products;
-    private double price;
+    private ArrayList<Purchase> purchases;
+    private double total;
     private String currency;
     private String method;
     private String intent;
     private String description;
     private String shop;
     private String state;
+    private String user;
 
-    public Order(String shop,double price, String currency, String method, String intent, String description,List<Product> products) {
+    public Order(String shop,double total, String currency, String method, String intent, String description,List<Purchase> purchases,String user) {
         this.shop = shop;
         this.currency = currency;
         this.method = method;
         this.intent = intent;
         this.description = description;
         this.state = "not payed";
-    }
-
-    public Order(String shop, ArrayList<Product> products, String method, String description,String currency){
-        this.shop= shop;
-        this.products=products;
-        this.method=method;
-        this.description=description;
-        this.intent = "SALE";
-        this.price = calculatePrice(products);
-        this.currency = currency;
-        this.state = "not payed";
-    }
-
-    private double calculatePrice(ArrayList<Product> products) {
-        double total = 0;
-        for (Product p: products){
-            total+=p.getPrice();
-        }
-        return total;
+        this.total = total;
+        this.purchases = (ArrayList<Purchase>) purchases;
+        this.user=user;
     }
 
     public Order() {
     }
 
-    public double getPrice() {
-        return price;
+    public double getTotal() {
+        return total;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setTotal(double total) {
+        this.total = total;
     }
 
     public String getCurrency() {
@@ -111,12 +96,12 @@ public class Order {
         this.id = id;
     }
 
-    public ArrayList<Product> getProducts() {
-        return products;
+    public ArrayList<Purchase> getPurchases() {
+        return purchases;
     }
 
-    public void setProducts(ArrayList<Product> products) {
-        this.products = products;
+    public void setPurchases(ArrayList<Purchase> purchases) {
+        this.purchases = purchases;
     }
 
     public String getState() {
@@ -125,5 +110,13 @@ public class Order {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 }
