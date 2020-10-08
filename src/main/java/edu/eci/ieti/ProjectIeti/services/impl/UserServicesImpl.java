@@ -1,12 +1,12 @@
 package edu.eci.ieti.ProjectIeti.services.impl;
 
-import edu.eci.ieti.ProjectIeti.model.Role;
 import edu.eci.ieti.ProjectIeti.model.User;
 import edu.eci.ieti.ProjectIeti.persistence.UserRepository;
 import edu.eci.ieti.ProjectIeti.Exceptions.UserException;
 import edu.eci.ieti.ProjectIeti.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -16,8 +16,9 @@ public class UserServicesImpl implements UserServices {
 
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void addUser(User user) throws UserException {
