@@ -21,11 +21,12 @@ public class Order {
     private String method;
     private String intent;
     private String description;
-    private String store;
+    private String shop;
     private String state;
+    private String user;
 
-    public Order(String store,double total, String currency, String method, String intent, String description,List<Purchase> purchases) {
-        this.store = store;
+    public Order(String shop,double total, String currency, String method, String intent, String description,List<Purchase> purchases,String user) {
+        this.shop = shop;
         this.currency = currency;
         this.method = method;
         this.intent = intent;
@@ -33,6 +34,7 @@ public class Order {
         this.state = "not payed";
         this.total = total;
         this.purchases = (ArrayList<Purchase>) purchases;
+        this.user=user;
     }
 
     public Order() {
@@ -78,12 +80,12 @@ public class Order {
         this.description = description;
     }
 
-    public String getStore() {
-        return store;
+    public String getShop() {
+        return shop;
     }
 
-    public void setStore(String store) {
-        this.store = store;
+    public void setShop(String shop) {
+        this.shop = shop;
     }
 
     public String getId() {
@@ -108,5 +110,13 @@ public class Order {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 }

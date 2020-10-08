@@ -36,7 +36,7 @@ public class PayPalServicesImpl implements PayServices {
     public Payment createPayment(Order order,
                                  String cancelUrl,
                                  String successUrl) throws PayPalRESTException, ShopException {
-        setPaymentConfiguration(order.getStore());
+        setPaymentConfiguration(order.getShop());
         Amount amount = new Amount();
         DecimalFormat df = new DecimalFormat("#.##");
         amount.setTotal(df.format(order.getTotal()));
