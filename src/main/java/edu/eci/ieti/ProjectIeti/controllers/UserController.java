@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/")
+@RequestMapping(value = "/users")
 public class UserController {
 
     @Autowired
@@ -27,7 +27,7 @@ public class UserController {
         }
     }
 
-    @PatchMapping("/users/{userId}")
+    @PatchMapping("/{userId}")
     public  ResponseEntity<?> updateUser(@PathVariable String userId,@RequestBody User user){
         try{
             user.setId(userId);
@@ -40,12 +40,8 @@ public class UserController {
 
     }
 
-    @GetMapping(path = "/users/{userId}/role")
-    public ResponseEntity<?> getRole(@PathVariable String email){
-        try {
-            return ResponseEntity.ok(userServices.getRole(email));
-        } catch (UserException e) {
-            return ResponseEntity.notFound().build();
-        }
+    @GetMapping(path = "/{token}")
+    public ResponseEntity<?> getRole(@PathVariable Authentication token){
+        return ResponseEntity.ok(token.getAuthorities());
     }
 }

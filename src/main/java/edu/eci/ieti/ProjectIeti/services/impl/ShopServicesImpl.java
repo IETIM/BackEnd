@@ -43,9 +43,7 @@ public class ShopServicesImpl implements ShopServices {
             throw new ShopException(ShopException.SHOP_REGISTERED);
         }
         else {
-            for (Product product : shop.getProducts()){
-                productRepository.save(product);
-            }
+            productRepository.saveAll(shop.getProducts());
             shopRepository.save(shop);
         }
     }
