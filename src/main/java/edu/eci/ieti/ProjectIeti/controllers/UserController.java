@@ -9,8 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin
-@RestController(origins="*")
+@CrossOrigin(origins="*")
+@RestController
 @RequestMapping(value = "/")
 public class UserController {
 
