@@ -1,8 +1,11 @@
 package edu.eci.ieti.ProjectIeti.services.impl;
 
 import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
+import edu.eci.ieti.ProjectIeti.model.Product;
 import edu.eci.ieti.ProjectIeti.model.Shop;
+import edu.eci.ieti.ProjectIeti.persistence.ProductRepository;
 import edu.eci.ieti.ProjectIeti.persistence.ShopRepository;
+import edu.eci.ieti.ProjectIeti.services.ProductServices;
 import edu.eci.ieti.ProjectIeti.services.ShopServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,9 @@ public class ShopServicesImpl implements ShopServices {
 
     @Autowired
     private ShopRepository shopRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @Override
     public List<Shop> getShops() {
@@ -32,14 +38,13 @@ public class ShopServicesImpl implements ShopServices {
 
     @Override
     public void addShop(Shop shop) throws ShopException {
+
         if(shopRepository.findByName(shop.getName()).isPresent()){
             throw new ShopException(ShopException.SHOP_REGISTERED);
         }
         else {
+            productRepository.saveAll(shop.getProducts());
             shopRepository.save(shop);
         }
     }
-
-
-
 }

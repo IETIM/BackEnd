@@ -9,9 +9,9 @@ public interface ProductServices {
 
     List<Product> getProducts(String idShop) throws ShopException;
 
-    void addProduct(Product product, String idShop) throws ShopException;
+    Product addProduct(Product product, String idShop) throws ShopException;
 
-    void updateProduct(Product product, String idProduct)throws ShopException;
+    Product updateProduct(Product product, String idProduct)throws ShopException;
 
     void deleteProduct(String idProduct)throws ShopException;
 }

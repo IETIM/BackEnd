@@ -1,5 +1,6 @@
 package edu.eci.ieti.ProjectIeti.services.impl;
 
+import edu.eci.ieti.ProjectIeti.model.Role;
 import edu.eci.ieti.ProjectIeti.model.User;
 import edu.eci.ieti.ProjectIeti.persistence.UserRepository;
 import edu.eci.ieti.ProjectIeti.Exceptions.UserException;
@@ -7,7 +8,7 @@ import edu.eci.ieti.ProjectIeti.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -56,4 +57,25 @@ public class UserServicesImpl implements UserServices {
             userRepository.save(usuarioActual);
         }
     }
+
+    @Override
+    public Role getRole(String email) throws UserException {
+
+        Optional<User> usuarioOpcional = userRepository.getUserByEmail(email);
+        if(!usuarioOpcional.isPresent()){
+            throw new UserException(UserException.USER_NOT_FOUND);
+        }else{
+            User realUser = usuarioOpcional.get();
+            List<Role> authorities = (List<Role>) realUser.getAuthorities();
+            return authorities.get(0);
+        }
+
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+
 }

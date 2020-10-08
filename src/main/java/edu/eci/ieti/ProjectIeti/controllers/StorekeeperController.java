@@ -1,12 +1,16 @@
 package edu.eci.ieti.ProjectIeti.controllers;
 
+import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
 import edu.eci.ieti.ProjectIeti.Exceptions.UserException;
 import edu.eci.ieti.ProjectIeti.model.Storekeeper;
 import edu.eci.ieti.ProjectIeti.services.StorekeeperServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @CrossOrigin
 @RestController
@@ -15,17 +19,17 @@ public class StorekeeperController {
     @Autowired
     private StorekeeperServices storekeeperServices;
 
-    @PostMapping("/storekeeper/register")
+    @PostMapping("/register")
     public ResponseEntity<?> addUser(@RequestBody Storekeeper user){
         try{
             storekeeperServices.addStorekeeper(user);
             return new ResponseEntity<>(user, HttpStatus.CREATED);
-        }catch (UserException e){
+        }catch (UserException | ShopException e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PatchMapping("/storekeeper/{userId}")
+    @PatchMapping("/{userId}")
     public  ResponseEntity<?> updateUser(@PathVariable String userId,@RequestBody Storekeeper user){
         try{
             user.setId(userId);
@@ -35,6 +39,15 @@ public class StorekeeperController {
         catch (UserException e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
+    }
 
+    @GetMapping("/{email}")
+    public ResponseEntity<?> getStorekeeperById(@PathVariable String email){
+        try{
+            return ResponseEntity.ok(storekeeperServices.getStorekeeperByEmail(email));
+        }
+        catch (UserException e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
     }
 }
