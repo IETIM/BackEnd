@@ -12,6 +12,4 @@ public interface OrderRepository extends MongoRepository<Order,String> {
     @Override
     void deleteById(String s);
 
-    @Override
-    <S extends Order> S insert(S s);
 }
