@@ -20,7 +20,7 @@ public class UserController {
     private UserServices userServices;
 
     @PostMapping("/register")
-    public ResponseEntity<?> addUser(@RequestBody User user, Authentication auth){
+    public ResponseEntity<?> addUser(@RequestBody User user){
         try{
             userServices.addUser(user);
             return new ResponseEntity<>(user, HttpStatus.CREATED);
