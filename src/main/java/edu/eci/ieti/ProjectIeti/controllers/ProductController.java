@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin
+@CrossOrigin(origins="*")
 @RestController
 @RequestMapping(value = "/products")
 public class ProductController {
@@ -29,8 +29,8 @@ public class ProductController {
     @PostMapping(value = "/{idShop}")
     public ResponseEntity<?> addProduct(@RequestBody Product product, @PathVariable String idShop){
         try {
-            productServices.addProduct(product,idShop);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            Product addedProduct= productServices.addProduct(product,idShop);
+            return new ResponseEntity<>(addedProduct ,HttpStatus.CREATED);
         }catch (ShopException e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
@@ -39,8 +39,8 @@ public class ProductController {
     @PatchMapping(value = "/{idProduct}")
     public ResponseEntity<?> updateProduct(@RequestBody Product product, @PathVariable String idProduct){
         try{
-            productServices.updateProduct(product,idProduct);
-            return new ResponseEntity<>(HttpStatus.OK);
+            Product updatedProduct= productServices.updateProduct(product,idProduct);
+            return new ResponseEntity<>(updatedProduct,HttpStatus.OK);
 
 
         }catch (ShopException e){

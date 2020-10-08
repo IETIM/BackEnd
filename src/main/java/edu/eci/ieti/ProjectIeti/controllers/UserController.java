@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/")
 public class UserController {
 
     @Autowired
@@ -43,5 +43,9 @@ public class UserController {
     @GetMapping(path = "/{token}")
     public ResponseEntity<?> getRole(@PathVariable Authentication token){
         return ResponseEntity.ok(token.getAuthorities());
+    }
+    @GetMapping(path="/username")
+    public ResponseEntity<?> getUsername(Authentication auth){
+        return new ResponseEntity<>(auth.getName(),HttpStatus.OK);
     }
 }
