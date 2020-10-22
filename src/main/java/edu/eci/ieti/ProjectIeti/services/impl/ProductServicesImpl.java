@@ -1,6 +1,6 @@
 package edu.eci.ieti.ProjectIeti.services.impl;
 
-import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
+import edu.eci.ieti.ProjectIeti.exceptions.ShopException;
 import edu.eci.ieti.ProjectIeti.model.Product;
 import edu.eci.ieti.ProjectIeti.model.Shop;
 import edu.eci.ieti.ProjectIeti.persistence.ProductRepository;
@@ -43,7 +43,9 @@ public class ProductServicesImpl implements ProductServices {
     public Product updateProduct(Product product, String idProduct) throws ShopException {
         Optional<Product> optionalProduct= productRepository.findById(idProduct);
         Product actualProduct = optionalProduct.orElseThrow(() -> new ShopException(ShopException.PRODUCT_NOT_FOUND));
-
+        if(product.getImage()!=null && !product.getImage().equals("")){
+            actualProduct.setImage(product.getImage());
+        }
         if(product.getDescription()!=null && !product.getCategory().equals("")){
             actualProduct.setDescription(product.getDescription());
         }

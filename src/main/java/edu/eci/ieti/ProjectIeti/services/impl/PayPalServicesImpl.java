@@ -2,7 +2,7 @@ package edu.eci.ieti.ProjectIeti.services.impl;
 
 import com.paypal.api.payments.Amount;
 import com.paypal.api.payments.Payment;
-import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
+import edu.eci.ieti.ProjectIeti.exceptions.ShopException;
 import edu.eci.ieti.ProjectIeti.config.PaypalConfig;
 import edu.eci.ieti.ProjectIeti.model.Order;
 import edu.eci.ieti.ProjectIeti.model.Shop;

@@ -1,6 +1,6 @@
 package edu.eci.ieti.ProjectIeti.controllers;
 
-import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
+import edu.eci.ieti.ProjectIeti.exceptions.ShopException;
 import edu.eci.ieti.ProjectIeti.model.Product;
 import edu.eci.ieti.ProjectIeti.services.ProductServices;
 import org.springframework.beans.factory.annotation.Autowired;
