@@ -82,8 +82,6 @@ public class PayPalServicesImpl implements PayServices {
     private void setPaymentConfiguration(String shop) throws PayPalRESTException, ShopException {
         PaypalConfig pc = new PaypalConfig();
         Shop tr = tiendaRepository.findByName(shop).orElseThrow(() -> new ShopException(ShopException.SHOP_NOT_FOUND));
-        String c="AQHEkaz_E0vSsZxJ6hF8pHnr8G1TZvKEKeT-G4r218xQJk0ckMCpz93ZJQXaIfPqcx5yatSBDsoIZiXc";
-        String s = "EFdNXWp0xMkxRR65fEoMJif2fNVjv7pQieNVt3JxoQtn9LlGYnC_922IQ33AhLW5nKesELDEt4JS_VAq";
         pc.setClientId(tr.getApiClient());
         pc.setClientSecret(tr.getApiSecret());
         pc.setMode("sandbox");

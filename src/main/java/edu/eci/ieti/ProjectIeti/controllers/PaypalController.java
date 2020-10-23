@@ -31,8 +31,6 @@ public class PaypalController {
         try {
             Order order = orderServices.getOrder(orderId);
             // SUCCESS AND CANCEL URL = DOMAIN+SECCESS_URL / CANCEL_URL
-            System.out.println("MODOFOKIU LA CURRENCY ------------>" + order.getCurrency());
-            System.out.println("MODOFOKIU EL PRICE ------------>" + order.getTotal());
             Payment payment = service.createPayment(order, "https://www.stanford.edu/",
                     "https://www.w3schools.com/");
 
@@ -46,7 +44,7 @@ public class PaypalController {
 
             e.printStackTrace();
         }
-        return "redirect:/coñopayment";
+        return "redirect:/";
     }
 
     @GetMapping(value = CANCEL_URL)
@@ -65,7 +63,7 @@ public class PaypalController {
         } catch (PayPalRESTException e) {
             System.out.println(e.getMessage());
         }
-        return "redirect:/coñosuccesspay";
+        return "redirect:/";
     }
 
 }
