@@ -5,7 +5,9 @@ import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -24,6 +26,7 @@ public class Order {
     private String shop;
     private String state;
     private String user;
+    private String date;
 
     public Order(String shop,double total, String currency, String method, String intent, String description,List<Purchase> purchases,String user) {
         this.shop = shop;
@@ -35,6 +38,7 @@ public class Order {
         this.total = total;
         this.purchases = (ArrayList<Purchase>) purchases;
         this.user=user;
+        setDate();
     }
 
     public Order() {
@@ -118,5 +122,15 @@ public class Order {
 
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate() {
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+        Date date = new Date(System.currentTimeMillis());
+        this.date = formatter.format(date);
     }
 }

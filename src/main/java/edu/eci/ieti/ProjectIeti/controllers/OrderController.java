@@ -37,7 +37,7 @@ public class OrderController {
         }
         return new ResponseEntity<>("SHOP DOES NOT EXISTS", HttpStatus.NOT_FOUND);
     }
-    @GetMapping(path="/{user}")
+    @GetMapping(path="/user/{user}")
     public ResponseEntity<?> getOrdersByUser(@PathVariable String user){
         try{
 

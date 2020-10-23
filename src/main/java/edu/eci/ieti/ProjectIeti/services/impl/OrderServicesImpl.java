@@ -34,6 +34,7 @@ public class OrderServicesImpl implements OrderServices {
         o.setTotal(total);
         o.setIntent("sale");
         o.setState("new");
+        o.setDate();
         purchaseRepository.saveAll(purchases);
         return orderRepository.save(o);
     }
