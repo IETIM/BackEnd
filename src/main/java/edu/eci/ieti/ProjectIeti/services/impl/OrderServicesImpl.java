@@ -55,6 +55,11 @@ public class OrderServicesImpl implements OrderServices {
     }
 
     @Override
+    public List<Order> getOrdersByUser(String user) {
+        return orderRepository.findAllByUser(user);
+    }
+
+    @Override
     public void cancelOrder(String orderId) {
         orderRepository.deleteById(orderId);
     }

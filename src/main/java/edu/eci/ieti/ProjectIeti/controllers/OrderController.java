@@ -37,6 +37,17 @@ public class OrderController {
         }
         return new ResponseEntity<>("SHOP DOES NOT EXISTS", HttpStatus.NOT_FOUND);
     }
+    @GetMapping(path="/{user}")
+    public ResponseEntity<?> getOrdersByShop(@PathVariable String user){
+        try{
+
+            return new ResponseEntity<>(orderServices.getOrdersByUser(user), HttpStatus.OK);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>("This user doesnt have orders yet or this user is not found", HttpStatus.NOT_FOUND);
+    }
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<?> deleteOrderById(@PathVariable String id){

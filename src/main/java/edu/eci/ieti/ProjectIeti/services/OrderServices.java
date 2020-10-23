@@ -15,6 +15,8 @@ public interface OrderServices {
 
     public List<Order> getOrdersByShop(String shopName);
 
+    public List<Order> getOrdersByUser(String user);
+
     public void cancelOrder(String orderId);
 
 
