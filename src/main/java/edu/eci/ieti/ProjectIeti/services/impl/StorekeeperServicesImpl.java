@@ -50,7 +50,7 @@ public class StorekeeperServicesImpl implements StorekeeperServices {
         } else {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             shopServices.addShop(user.getShop());
-            User newUser = new User(user.getEmail(),user.getName(),user.getPassword());
+            User newUser = new User(user.getEmail(),user.getName(),user.getPassword(),null,user.getCellphone());
             List<Role> roles = new ArrayList();
             Role rol = roleRepository.findByRole(ERole.ROLE_TENDERO);
             roles.add(rol);
@@ -75,7 +75,7 @@ public class StorekeeperServicesImpl implements StorekeeperServices {
         if(user.getName()!=null){
             actualStoreK.setName(user.getName());
         }
-        if( user.getCellphone() != 0 ){
+        if( user.getCellphone()!=null){
             actualStoreK.setCellphone(user.getCellphone());
         }
         if(user.getPassword()!=null){
