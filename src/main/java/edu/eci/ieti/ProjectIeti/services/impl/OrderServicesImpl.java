@@ -36,6 +36,7 @@ public class OrderServicesImpl implements OrderServices {
         o.setTotal(total);
         o.setIntent("sale");
         o.setState("new");
+        o.setDate();
         purchaseRepository.saveAll(purchases);
         return orderRepository.save(o);
     }
@@ -54,6 +55,11 @@ public class OrderServicesImpl implements OrderServices {
     @Override
     public List<Order> getOrdersByShop(String shopName) {
         return orderRepository.findAllByShop(shopName);
+    }
+
+    @Override
+    public List<Order> getOrdersByUser(String user) {
+        return orderRepository.findAllByUser(user);
     }
 
     @Override

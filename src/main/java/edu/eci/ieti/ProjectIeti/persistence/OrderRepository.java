@@ -14,6 +14,8 @@ public interface OrderRepository extends MongoRepository<Order,String> {
 
     List<Order> findAllByShop(String shop);
 
+    List<Order> findAllByUser(String user);
+
     @Override
     <S extends Order> S insert(S s);
     
