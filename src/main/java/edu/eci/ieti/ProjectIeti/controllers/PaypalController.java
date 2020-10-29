@@ -1,6 +1,6 @@
 package edu.eci.ieti.ProjectIeti.controllers;
 
-import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
+import edu.eci.ieti.ProjectIeti.exceptions.ShopException;
 import edu.eci.ieti.ProjectIeti.model.Order;
 import edu.eci.ieti.ProjectIeti.services.OrderServices;
 import edu.eci.ieti.ProjectIeti.services.PayServices;
@@ -10,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;

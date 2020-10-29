@@ -24,6 +24,10 @@ public class User implements UserDetails {
 
     private String password;
 
+    private String cellphone;
+
+    private String address;
+
     @DBRef
     private List<Role> authorities;
 
@@ -31,10 +35,12 @@ public class User implements UserDetails {
         this.authorities=new ArrayList<>();
     }
 
-    public User(String email, String username, String password) {
+    public User(String email, String username, String password,String address,String cellphone) {
         this.email = email;
         this.name = username;
         this.password = password;
+        this.address = address;
+        this.cellphone = cellphone;
         this.authorities=new ArrayList<>();
     }
 
@@ -64,6 +70,22 @@ public class User implements UserDetails {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getCellphone() {
+        return cellphone;
+    }
+
+    public void setCellphone(String cellphone) {
+        this.cellphone = cellphone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Override

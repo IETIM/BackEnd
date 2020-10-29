@@ -1,20 +1,17 @@
 package edu.eci.ieti.ProjectIeti.services.impl;
 
-import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
-import edu.eci.ieti.ProjectIeti.Exceptions.UserException;
+import edu.eci.ieti.ProjectIeti.exceptions.ShopException;
+import edu.eci.ieti.ProjectIeti.exceptions.UserException;
 import edu.eci.ieti.ProjectIeti.model.ERole;
 import edu.eci.ieti.ProjectIeti.model.Role;
 import edu.eci.ieti.ProjectIeti.model.Storekeeper;
 import edu.eci.ieti.ProjectIeti.model.User;
-import edu.eci.ieti.ProjectIeti.persistence.OrderRepository;
 import edu.eci.ieti.ProjectIeti.persistence.RoleRepository;
-import edu.eci.ieti.ProjectIeti.persistence.ShopRepository;
 import edu.eci.ieti.ProjectIeti.persistence.StorekeeperRepository;
 import edu.eci.ieti.ProjectIeti.services.ShopServices;
 import edu.eci.ieti.ProjectIeti.services.StorekeeperServices;
 import edu.eci.ieti.ProjectIeti.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -50,7 +47,7 @@ public class StorekeeperServicesImpl implements StorekeeperServices {
         } else {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             shopServices.addShop(user.getShop());
-            User newUser = new User(user.getEmail(),user.getName(),user.getPassword());
+            User newUser = new User(user.getEmail(),user.getName(),user.getPassword(),null,user.getCellphone());
             List<Role> roles = new ArrayList();
             Role rol = roleRepository.findByRole(ERole.ROLE_TENDERO);
             roles.add(rol);
@@ -75,7 +72,7 @@ public class StorekeeperServicesImpl implements StorekeeperServices {
         if(user.getName()!=null){
             actualStoreK.setName(user.getName());
         }
-        if( user.getCellphone() != 0 ){
+        if( user.getCellphone()!=null){
             actualStoreK.setCellphone(user.getCellphone());
         }
         if(user.getPassword()!=null){

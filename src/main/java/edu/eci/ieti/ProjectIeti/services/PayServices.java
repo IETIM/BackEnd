@@ -2,7 +2,7 @@ package edu.eci.ieti.ProjectIeti.services;
 
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
-import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
+import edu.eci.ieti.ProjectIeti.exceptions.ShopException;
 import edu.eci.ieti.ProjectIeti.model.Order;
 
 public interface PayServices {

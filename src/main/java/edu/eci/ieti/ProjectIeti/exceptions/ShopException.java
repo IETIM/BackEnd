@@ -1,4 +1,4 @@
-package edu.eci.ieti.ProjectIeti.Exceptions;
+package edu.eci.ieti.ProjectIeti.exceptions;
 
 public class ShopException extends Exception {
     public static final String SHOP_NOT_FOUND = "Shop not found" ;

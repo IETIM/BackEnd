@@ -1,7 +1,6 @@
 package edu.eci.ieti.ProjectIeti.services;
 
-import edu.eci.ieti.ProjectIeti.Exceptions.UserException;
-import edu.eci.ieti.ProjectIeti.model.Role;
+import edu.eci.ieti.ProjectIeti.exceptions.UserException;
 import edu.eci.ieti.ProjectIeti.model.User;
 
 import java.util.List;
