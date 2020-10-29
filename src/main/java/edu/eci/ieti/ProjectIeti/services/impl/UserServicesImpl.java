@@ -1,13 +1,17 @@
 package edu.eci.ieti.ProjectIeti.services.impl;
 
+import edu.eci.ieti.ProjectIeti.model.ERole;
+import edu.eci.ieti.ProjectIeti.model.Role;
 import edu.eci.ieti.ProjectIeti.model.User;
+import edu.eci.ieti.ProjectIeti.persistence.RoleRepository;
 import edu.eci.ieti.ProjectIeti.persistence.UserRepository;
-import edu.eci.ieti.ProjectIeti.Exceptions.UserException;
+import edu.eci.ieti.ProjectIeti.exceptions.UserException;
 import edu.eci.ieti.ProjectIeti.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +24,9 @@ public class UserServicesImpl implements UserServices {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    RoleRepository roleRepository;
+
     @Override
     public void addUser(User user) throws UserException {
 
@@ -27,6 +34,10 @@ public class UserServicesImpl implements UserServices {
         if (optionalUser.isPresent()) {
             throw new UserException(UserException.USER_REGISTERED);
         } else {
+            List<Role> roles = new ArrayList();
+            Role rol = roleRepository.findByRole(ERole.ROLE_USER);
+            roles.add(rol);
+            user.setAuthorities(roles);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
         }

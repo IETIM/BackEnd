@@ -1,11 +1,9 @@
 package edu.eci.ieti.ProjectIeti.services.impl;
 
-import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
-import edu.eci.ieti.ProjectIeti.model.Product;
+import edu.eci.ieti.ProjectIeti.exceptions.ShopException;
 import edu.eci.ieti.ProjectIeti.model.Shop;
 import edu.eci.ieti.ProjectIeti.persistence.ProductRepository;
 import edu.eci.ieti.ProjectIeti.persistence.ShopRepository;
-import edu.eci.ieti.ProjectIeti.services.ProductServices;
 import edu.eci.ieti.ProjectIeti.services.ShopServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

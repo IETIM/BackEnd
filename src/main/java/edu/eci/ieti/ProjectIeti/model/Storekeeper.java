@@ -6,9 +6,6 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Document(collection = "storekeepers")
 @TypeAlias("storekeeper")
 public class Storekeeper{
@@ -23,7 +20,7 @@ public class Storekeeper{
 
     private String password;
 
-    private int cellphone;
+    private String cellphone;
 
     @DBRef
     private Shop shop;
@@ -31,7 +28,7 @@ public class Storekeeper{
     public Storekeeper() {
     }
 
-    public Storekeeper(String id, String email, String name, String password, int cellphone, Shop shop) {
+    public Storekeeper(String id, String email, String name, String password, String cellphone, Shop shop) {
         this.email = email;
         this.name = name;
         this.password = password;
@@ -71,11 +68,11 @@ public class Storekeeper{
         this.password = password;
     }
 
-    public int getCellphone() {
+    public String getCellphone() {
         return cellphone;
     }
 
-    public void setCellphone(int cellphone) {
+    public void setCellphone(String cellphone) {
         this.cellphone = cellphone;
     }
 
