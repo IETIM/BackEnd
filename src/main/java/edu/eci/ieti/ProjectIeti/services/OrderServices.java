@@ -11,7 +11,7 @@ public interface OrderServices {
 
     public Order getOrder(String orderId) throws ShopException;
 
-    public void payOrder(String orderId);
+    public void payOrder(String orderId) throws ShopException;
 
     public List<Order> getOrdersByShop(String shopName);
 

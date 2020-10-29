@@ -47,7 +47,11 @@ public class OrderServicesImpl implements OrderServices {
     }
 
     @Override
-    public void payOrder(String orderId) {
+    public void payOrder(String orderId) throws ShopException {
+        Optional<Order> o =  orderRepository.findById(orderId);
+        Order ord = o.orElseThrow(() -> new ShopException(ShopException.ORDER_NOT_FOUND));
+        ord.setState("payed");
+        orderRepository.save(ord);
     }
 
     @Override
