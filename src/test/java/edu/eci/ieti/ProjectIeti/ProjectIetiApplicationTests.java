@@ -64,17 +64,26 @@ class ProjectIetiApplicationTests {
 
 	@Test
 	public void shoulBeAddANewUser() throws Exception{
+		createRoles();
 		User user = new User("juan@mail.com","juan","pwd","CR 1RA","111112");
+		ArrayList<Role> rolesUser = new ArrayList<>();
+		user.setAuthorities(rolesUser);
+		rolesUser.add(roles[0]);
 		mock.perform(post("/register").content(mapper.writeValueAsString(user))
 				.header("Content-Type","application/json")).andExpect(status().is2xxSuccessful());
 	}
 
 	@Test
 	public void shouldntBeAddedUsersWithTheSameEmail() throws Exception{
+		createRoles();
 		User user = new User("cam@mail.com","cam","cam","CR 1RA","111112");
+		ArrayList<Role> rolesUser = new ArrayList<>();
+		user.setAuthorities(rolesUser);
+		rolesUser.add(roles[0]);
 		mock.perform(post("/register").content(mapper.writeValueAsString(user))
 				.header("Content-Type","application/json")).andExpect(status().is2xxSuccessful());
 		User user2 = new User("cam@mail.com","C cam","12345","CR 1RA","111112");
+		user2.setAuthorities(rolesUser);
 		mock.perform(post("/register").content(mapper.writeValueAsString(user))
 				.header("Content-Type","application/json")).andExpect(status().is4xxClientError());
 	}
@@ -105,7 +114,11 @@ class ProjectIetiApplicationTests {
 
 	@Test
 	public void shouldBeGiveTheUserName() throws Exception{
+		createRoles();
 		User user = new User("charlie@mail.com","Charlie","daniel","CR 1RA","111112");
+		ArrayList<Role> rolesUser = new ArrayList<>();
+		rolesUser.add(roles[0]);
+		user.setAuthorities(rolesUser);
 		JwtRequest req = new JwtRequest("charlie@mail.com","daniel");
 		mock.perform(post("/register").content(mapper.writeValueAsString(user))
 				.header("Content-Type","application/json")).andExpect(status().is2xxSuccessful());
@@ -119,7 +132,11 @@ class ProjectIetiApplicationTests {
 
 	@Test
 	public void shouldBeAddAShop() throws Exception{
+		createRoles();
 		User user = new User("shop1@mail.com","shop","shops","CR 1RA","111112");
+		ArrayList<Role> rolesUser = new ArrayList<>();
+		rolesUser.add(roles[1]);
+		user.setAuthorities(rolesUser);
 		JwtRequest req = new JwtRequest("shop1@mail.com","shops");
 		mock.perform(post("/register").content(mapper.writeValueAsString(user))
 				.header("Content-Type","application/json")).andExpect(status().is2xxSuccessful());
@@ -134,7 +151,11 @@ class ProjectIetiApplicationTests {
 
 	@Test
 	public void shoudntBeAddAShop() throws Exception{
+		createRoles();
 		User user = new User("shop2@mail.com","shop2","shops2","CR 1RA","111112");
+		ArrayList<Role> rolesUser = new ArrayList<>();
+		rolesUser.add(roles[1]);
+		user.setAuthorities(rolesUser);
 		JwtRequest req = new JwtRequest("shop2@mail.com","shops2");
 		mock.perform(post("/register").content(mapper.writeValueAsString(user))
 				.header("Content-Type","application/json")).andExpect(status().is2xxSuccessful());
@@ -151,7 +172,11 @@ class ProjectIetiApplicationTests {
 	}
 	@Test
 	public void shouldBeQueryAShop() throws Exception{
+		createRoles();
 		User user = new User("shop3@mail.com","shop3","shops3","CR 1RA","111112");
+		ArrayList<Role> rolesUser = new ArrayList<>();
+		rolesUser.add(roles[1]);
+		user.setAuthorities(rolesUser);
 		JwtRequest req = new JwtRequest("shop3@mail.com","shops3");
 		mock.perform(post("/register").content(mapper.writeValueAsString(user))
 				.header("Content-Type","application/json")).andExpect(status().is2xxSuccessful());
@@ -172,7 +197,11 @@ class ProjectIetiApplicationTests {
 
 	@Test
 	public void shouldBeFindAshopByType() throws Exception{
+		createRoles();
 		User user = new User("shoptype@mail.com","shoptype","shopstype","CR 1RA","111112");
+		ArrayList<Role> rolesUser = new ArrayList<>();
+		rolesUser.add(roles[1]);
+		user.setAuthorities(rolesUser);
 		JwtRequest req = new JwtRequest("shoptype@mail.com","shopstype");
 		mock.perform(post("/register").content(mapper.writeValueAsString(user))
 				.header("Content-Type","application/json")).andExpect(status().is2xxSuccessful());
@@ -192,7 +221,11 @@ class ProjectIetiApplicationTests {
 	}
 	@Test
 	public void shouldntBeAddAProductInUnexistStore() throws Exception{
+		createRoles();
 		User user = new User("shop5@mail.com","shop5","shops5","CR 1RA","111112");
+		ArrayList<Role> rolesUser = new ArrayList<>();
+		rolesUser.add(roles[1]);
+		user.setAuthorities(rolesUser);
 		JwtRequest req = new JwtRequest("shop5@mail.com","shops5");
 		mock.perform(post("/register").content(mapper.writeValueAsString(user))
 				.header("Content-Type","application/json")).andExpect(status().is2xxSuccessful());
@@ -211,6 +244,9 @@ class ProjectIetiApplicationTests {
 	public void shouldBeAddAProductInStore() throws Exception{
 		createRoles();
 		User user = new User("shop6@mail.com","shop6","shops6","CR 1RA","111112");
+		ArrayList<Role> rolesUser = new ArrayList<>();
+		rolesUser.add(roles[1]);
+		user.setAuthorities(rolesUser);
 		JwtRequest req = new JwtRequest("shop6@mail.com","shops6");
 		mock.perform(post("/register").content(mapper.writeValueAsString(user))
 				.header("Content-Type","application/json")).andExpect(status().is2xxSuccessful());
