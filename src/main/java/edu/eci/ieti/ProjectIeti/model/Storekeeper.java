@@ -28,7 +28,7 @@ public class Storekeeper{
     public Storekeeper() {
     }
 
-    public Storekeeper(String id, String email, String name, String password, String cellphone, Shop shop) {
+    public Storekeeper( String email, String name, String password, String cellphone, Shop shop) {
         this.email = email;
         this.name = name;
         this.password = password;

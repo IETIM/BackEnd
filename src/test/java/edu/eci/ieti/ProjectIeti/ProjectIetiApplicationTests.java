@@ -93,7 +93,9 @@ class ProjectIetiApplicationTests {
 		userRepository.save(user);
 		mock.perform(post("/login").content(mapper.writeValueAsString(req))
 				.header("Content-Type","application/json")).andDo((request)->{
+					System.out.println(request.getResponse().getContentAsString());
 					token = mapper.readValue(request.getResponse().getContentAsString(), JwtResponse.class).getToken();
+
 		});
 		mock.perform(get("/role").header("Authorization",token)).andDo((request)->{
 			String[] rol = mapper.readValue(request.getResponse().getContentAsString(),String[].class);
@@ -209,9 +211,6 @@ class ProjectIetiApplicationTests {
 	public void shouldBeAddAProductInStore() throws Exception{
 		createRoles();
 		User user = new User("shop6@mail.com","shop6","shops6","CR 1RA","111112");
-		ArrayList<Role> rolesUser = new ArrayList<>();
-		rolesUser.add(roles[1]);
-		user.setAuthorities(rolesUser);
 		JwtRequest req = new JwtRequest("shop6@mail.com","shops6");
 		mock.perform(post("/register").content(mapper.writeValueAsString(user))
 				.header("Content-Type","application/json")).andExpect(status().is2xxSuccessful());

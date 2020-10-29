@@ -31,6 +31,7 @@ public class JwtAuthenticationController {
     @PostMapping(value = "/login")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)
     {
+        System.out.println("------------------ Entro login -----------------------------");
         try {
 
             authenticate(authenticationRequest.getUsername(),authenticationRequest.getPassword());
@@ -38,7 +39,9 @@ public class JwtAuthenticationController {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.UNAUTHORIZED);
         }
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+        System.out.println("-------------------- Creo Token -------------------------");
         final String token = jwtTokenUtil.generateToken(userDetails);
+        System.out.println(token);
         return ResponseEntity.ok(new JwtResponse(token));
     }
 

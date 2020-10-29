@@ -1,5 +1,6 @@
 package edu.eci.ieti.ProjectIeti.security;
 
+import edu.eci.ieti.ProjectIeti.model.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -22,7 +23,7 @@ public class JwtTokenUtil implements Serializable
 
     public static final long JWT_TOKEN_VALIDITY = 1000 * 3600;
 
-    @Value("${jwt.secret}")
+    @Value("${JWT_SECRET}")
     private String secret;
 
     public String getUsernameFromToken(String token) {
@@ -55,6 +56,8 @@ public class JwtTokenUtil implements Serializable
     }
 
     private String doGenerateToken(Map<String, Object> claims, String subject, Collection<? extends GrantedAuthority> roles) {
+        System.out.println("Key Token "+secret);
+        for(GrantedAuthority r:roles)System.out.println(r.getAuthority());
         return Jwts.builder().setClaims(claims).setSubject(subject)
                 .claim("roles", roles)
                 .setIssuedAt(new Date(System.currentTimeMillis()))

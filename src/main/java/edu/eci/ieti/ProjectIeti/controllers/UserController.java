@@ -22,6 +22,7 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<?> addUser(@RequestBody User user){
         try{
+            System.out.println("---------Entro Registro ----------------------");
             userServices.addUser(user);
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         }catch (UserException e){
