@@ -5,10 +5,9 @@ import edu.eci.ieti.ProjectIeti.model.Role;
 import edu.eci.ieti.ProjectIeti.model.User;
 import edu.eci.ieti.ProjectIeti.persistence.RoleRepository;
 import edu.eci.ieti.ProjectIeti.persistence.UserRepository;
-import edu.eci.ieti.ProjectIeti.Exceptions.UserException;
+import edu.eci.ieti.ProjectIeti.exceptions.UserException;
 import edu.eci.ieti.ProjectIeti.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

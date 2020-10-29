@@ -2,7 +2,6 @@ package edu.eci.ieti.ProjectIeti.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
@@ -12,6 +11,8 @@ public class Product {
 
     @Id
     private String id;
+
+    private String image;
 
     private String name;
 
@@ -75,4 +76,11 @@ public class Product {
         this.stocks = stocks;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 }

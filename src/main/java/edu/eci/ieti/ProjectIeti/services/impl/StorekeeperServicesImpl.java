@@ -1,20 +1,17 @@
 package edu.eci.ieti.ProjectIeti.services.impl;
 
-import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
-import edu.eci.ieti.ProjectIeti.Exceptions.UserException;
+import edu.eci.ieti.ProjectIeti.exceptions.ShopException;
+import edu.eci.ieti.ProjectIeti.exceptions.UserException;
 import edu.eci.ieti.ProjectIeti.model.ERole;
 import edu.eci.ieti.ProjectIeti.model.Role;
 import edu.eci.ieti.ProjectIeti.model.Storekeeper;
 import edu.eci.ieti.ProjectIeti.model.User;
-import edu.eci.ieti.ProjectIeti.persistence.OrderRepository;
 import edu.eci.ieti.ProjectIeti.persistence.RoleRepository;
-import edu.eci.ieti.ProjectIeti.persistence.ShopRepository;
 import edu.eci.ieti.ProjectIeti.persistence.StorekeeperRepository;
 import edu.eci.ieti.ProjectIeti.services.ShopServices;
 import edu.eci.ieti.ProjectIeti.services.StorekeeperServices;
 import edu.eci.ieti.ProjectIeti.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

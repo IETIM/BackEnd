@@ -1,7 +1,9 @@
 package edu.eci.ieti.ProjectIeti.services.impl;
 
-import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
-import edu.eci.ieti.ProjectIeti.model.*;
+import edu.eci.ieti.ProjectIeti.exceptions.ShopException;
+import edu.eci.ieti.ProjectIeti.model.Order;
+import edu.eci.ieti.ProjectIeti.model.Product;
+import edu.eci.ieti.ProjectIeti.model.Purchase;
 import edu.eci.ieti.ProjectIeti.persistence.OrderRepository;
 import edu.eci.ieti.ProjectIeti.persistence.ProductRepository;
 import edu.eci.ieti.ProjectIeti.persistence.PurchaseRepository;

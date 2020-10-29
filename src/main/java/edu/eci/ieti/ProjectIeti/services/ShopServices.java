@@ -1,6 +1,6 @@
 package edu.eci.ieti.ProjectIeti.services;
 
-import edu.eci.ieti.ProjectIeti.Exceptions.ShopException;
+import edu.eci.ieti.ProjectIeti.exceptions.ShopException;
 import edu.eci.ieti.ProjectIeti.model.Shop;
 
 import java.util.List;
