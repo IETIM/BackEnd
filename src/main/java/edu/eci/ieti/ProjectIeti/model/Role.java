@@ -41,5 +41,4 @@ public class Role implements GrantedAuthority {
         this.role = role;
     }
 
-
 }

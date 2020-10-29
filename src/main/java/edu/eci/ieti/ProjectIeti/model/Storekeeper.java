@@ -16,24 +16,19 @@ public class Storekeeper{
     @Indexed(unique = true)
     private String email;
 
-    private String name;
-
-    private String password;
-
-    private String cellphone;
-
     @DBRef
     private Shop shop;
 
     public Storekeeper() {
     }
 
-    public Storekeeper( String email, String name, String password, String cellphone, Shop shop) {
+    public Storekeeper( String email, Shop shop) {
         this.email = email;
-        this.name = name;
-        this.password = password;
-        this.cellphone = cellphone;
         this.shop = shop;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getId() {
@@ -44,36 +39,8 @@ public class Storekeeper{
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getCellphone() {
-        return cellphone;
-    }
-
-    public void setCellphone(String cellphone) {
-        this.cellphone = cellphone;
     }
 
     public Shop getShop() {

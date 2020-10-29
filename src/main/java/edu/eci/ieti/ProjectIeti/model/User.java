@@ -39,7 +39,6 @@ public class User implements UserDetails {
         this.email = email;
         this.name = username;
         this.password = password;
-        this.address = address;
         this.cellphone = cellphone;
         this.authorities=new ArrayList<>();
     }
@@ -124,5 +123,17 @@ public class User implements UserDetails {
 
     public void setAuthorities(List<Role> authorities) {
         this.authorities = authorities;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", cellphone='" + cellphone + '\'' +
+                ", address='" + address + '\'' +
+                ", authorities=" + authorities +
+                '}';
     }
 }

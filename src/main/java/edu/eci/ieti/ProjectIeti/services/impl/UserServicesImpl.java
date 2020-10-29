@@ -34,11 +34,13 @@ public class UserServicesImpl implements UserServices {
         if (optionalUser.isPresent()) {
             throw new UserException(UserException.USER_REGISTERED);
         } else {
-            List<Role> roles = new ArrayList();
-            Role rol = roleRepository.findByRole(ERole.ROLE_USER);
-            roles.add(rol);
-            user.setAuthorities(roles);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
+            List<ERole> roles = new ArrayList<>();
+            user.getAuthorities().forEach(e -> roles.add(e.getRole()));
+            Role role = roleRepository.findByRole(roles.get(0));
+            List rolesN = new ArrayList();
+            rolesN.add(role);
+            user.setAuthorities(rolesN);
             userRepository.save(user);
         }
     }

@@ -29,6 +29,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
 
         User usuario = userRepository.getUserByEmail(s).get();
+        System.out.println("holaaaaaaaaa");
 
         List<GrantedAuthority> authorities = usuario.getAuthorities()
                 .stream()

@@ -35,7 +35,6 @@ public class StorekeeperServicesImpl implements StorekeeperServices {
     private RoleRepository roleRepository;
 
 
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -45,14 +44,7 @@ public class StorekeeperServicesImpl implements StorekeeperServices {
         if (findStorekeeper.isPresent()) {
             throw new UserException(UserException.USER_REGISTERED);
         } else {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
             shopServices.addShop(user.getShop());
-            User newUser = new User(user.getEmail(),user.getName(),user.getPassword(),null,user.getCellphone());
-            List<Role> roles = new ArrayList();
-            Role rol = roleRepository.findByRole(ERole.ROLE_TENDERO);
-            roles.add(rol);
-            newUser.setAuthorities(roles);
-            userServices.addUser(newUser);
             storekeeperRepository.save(user);
         }
     }
@@ -68,15 +60,6 @@ public class StorekeeperServicesImpl implements StorekeeperServices {
         Storekeeper actualStoreK = optionalStorekeeper.orElseThrow(() -> new UserException(UserException.USER_NOT_FOUND));
         if(user.getEmail()!=null){
             actualStoreK.setEmail(user.getEmail());
-        }
-        if(user.getName()!=null){
-            actualStoreK.setName(user.getName());
-        }
-        if( user.getCellphone()!=null){
-            actualStoreK.setCellphone(user.getCellphone());
-        }
-        if(user.getPassword()!=null){
-            actualStoreK.setPassword(user.getPassword());
         }
         storekeeperRepository.save(actualStoreK);
     }

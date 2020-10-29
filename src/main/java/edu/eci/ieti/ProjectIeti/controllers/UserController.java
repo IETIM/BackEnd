@@ -23,6 +23,7 @@ public class UserController {
     public ResponseEntity<?> addUser(@RequestBody User user){
         try{
             System.out.println("---------Entro Registro ----------------------");
+            System.out.println("auth "+ user.getAuthorities().toString());
             userServices.addUser(user);
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         }catch (UserException e){
