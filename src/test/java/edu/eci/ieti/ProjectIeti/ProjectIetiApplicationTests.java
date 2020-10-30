@@ -7,6 +7,7 @@ import edu.eci.ieti.ProjectIeti.persistence.ShopRepository;
 import edu.eci.ieti.ProjectIeti.persistence.UserRepository;
 import edu.eci.ieti.ProjectIeti.security.JwtRequest;
 import edu.eci.ieti.ProjectIeti.security.JwtResponse;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,12 +42,14 @@ class ProjectIetiApplicationTests {
 	@Autowired
 	private ShopRepository shopRepository;
 
-	private Role[] roles;
+	private Role[] roles = null;
 
 	private String token;
 
 	public void createRoles(){
-		if(roles==null) {
+		roleRepository.deleteAll();
+		userRepository.deleteAll();
+		shopRepository.deleteAll();
 			Role role1 = new Role();
 			role1.setRole(ERole.ROLE_USER);
 			role1 = roleRepository.save(role1);
@@ -56,50 +59,33 @@ class ProjectIetiApplicationTests {
 			Role role3 = new Role();
 			role3.setRole(ERole.ROLE_ADMIN);
 			role3 = roleRepository.save(role3);
-			roles = new Role[]{role1, role2, role3};
-			System.out.println("Creo Roles");
-		}
-
+			this.roles =  new Role[]{role1, role2, role3};
 	}
 
 	@Test
 	public void shoulBeAddANewUser() throws Exception{
 		createRoles();
-		User user = new User("juan@mail.com","juan","pwd","CR 1RA","111112");
-		ArrayList<Role> rolesUser = new ArrayList<>();
-		user.setAuthorities(rolesUser);
-		rolesUser.add(roles[0]);
-		mock.perform(post("/register").content(mapper.writeValueAsString(user))
+		mock.perform(post("/register").content("{ \"name\": \"dan\",     \"email\": \"dan@mail.com\",     \"password\": \"dan\",     \"cellphone\": \"112323\",     \"address\": \"1\",     \"authorities\":[ {\"role\" : \"ROLE_TENDERO\" }] }")
 				.header("Content-Type","application/json")).andExpect(status().is2xxSuccessful());
 	}
 
 	@Test
 	public void shouldntBeAddedUsersWithTheSameEmail() throws Exception{
 		createRoles();
-		User user = new User("cam@mail.com","cam","cam","CR 1RA","111112");
-		ArrayList<Role> rolesUser = new ArrayList<>();
-		user.setAuthorities(rolesUser);
-		rolesUser.add(roles[0]);
-		mock.perform(post("/register").content(mapper.writeValueAsString(user))
+		mock.perform(post("/register").content("{ \"name\": \"can\",     \"email\": \"cam@mail.com\",     \"password\": \"cam\",     \"cellphone\": \"112323\",     \"address\": \"1\",     \"authorities\":[ {\"role\" : \"ROLE_TENDERO\" }] }")
 				.header("Content-Type","application/json")).andExpect(status().is2xxSuccessful());
 		User user2 = new User("cam@mail.com","C cam","12345","CR 1RA","111112");
-		user2.setAuthorities(rolesUser);
-		mock.perform(post("/register").content(mapper.writeValueAsString(user))
+		mock.perform(post("/register").content("{ \"name\": \"dan\",     \"email\": \"cam@mail.com\",     \"password\": \"dan\",     \"cellphone\": \"112323\",     \"address\": \"1\",     \"authorities\":[ {\"role\" : \"ROLE_TENDERO\" }] }")
 				.header("Content-Type","application/json")).andExpect(status().is4xxClientError());
 	}
 
 	@Test
 	public void shouldBeGetTheRole() throws Exception{
 		createRoles();
-		User user = new User("daniel@mail.com","daniel","daniel","CR 1RA","111112");
-		ArrayList<Role> rolesUser = new ArrayList<>();
-		rolesUser.add(roles[0]);
-		user.setAuthorities(rolesUser);
-		mock.perform(post("/register").content(mapper.writeValueAsString(user))
+		mock.perform(post("/register").content("{ \"name\": \"daniel\",\"email\": \"daniel@mail.com\",\"password\": \"daniel123\",     \"cellphone\": \"112323\", \"address\": \"1\", \"authorities\":[ {\"role\" : \"ROLE_USER\" }] }")
 				.header("Content-Type","application/json")).andExpect(status().is2xxSuccessful());
-		JwtRequest req = new JwtRequest("daniel@mail.com","daniel");
-		user = userRepository.getUserByEmail("daniel@mail.com").get();
-		userRepository.save(user);
+		JwtRequest req = new JwtRequest("daniel@mail.com","daniel123");
+		User user = userRepository.getUserByEmail("daniel@mail.com").get();
 		mock.perform(post("/login").content(mapper.writeValueAsString(req))
 				.header("Content-Type","application/json")).andDo((request)->{
 					System.out.println(request.getResponse().getContentAsString());
@@ -115,12 +101,10 @@ class ProjectIetiApplicationTests {
 	@Test
 	public void shouldBeGiveTheUserName() throws Exception{
 		createRoles();
-		User user = new User("charlie@mail.com","Charlie","daniel","CR 1RA","111112");
-		ArrayList<Role> rolesUser = new ArrayList<>();
-		rolesUser.add(roles[0]);
-		user.setAuthorities(rolesUser);
 		JwtRequest req = new JwtRequest("charlie@mail.com","daniel");
-		mock.perform(post("/register").content(mapper.writeValueAsString(user))
+		mock.perform(post("/register").content("{ \"name\": \"dan\",     \"email\": \"charlie@mail.com\",     \"password\": \"daniel\",     \"cellphone\": \"112323\",     \"address\": \"1\",     \"authorities\":[ {\"role\" : \"ROLE_TENDERO\" }] }")
+				.header("Content-Type","application/json")).andExpect(status().is2xxSuccessful());
+		mock.perform(post("/storekeeper/register").content("{\"email\":\"charlie@mail.com\",\"password\":\"daniel\",\"name\":\"Charlie\",\"cellphone\":\"121321\",\"address\":\"Data\",\"shop\":{\"name\":\"Test1\"}}")
 				.header("Content-Type","application/json")).andExpect(status().is2xxSuccessful());
 		mock.perform(post("/login").content(mapper.writeValueAsString(req))
 				.header("Content-Type","application/json")).andDo((request)->{
@@ -133,12 +117,8 @@ class ProjectIetiApplicationTests {
 	@Test
 	public void shouldBeAddAShop() throws Exception{
 		createRoles();
-		User user = new User("shop1@mail.com","shop","shops","CR 1RA","111112");
-		ArrayList<Role> rolesUser = new ArrayList<>();
-		rolesUser.add(roles[1]);
-		user.setAuthorities(rolesUser);
 		JwtRequest req = new JwtRequest("shop1@mail.com","shops");
-		mock.perform(post("/register").content(mapper.writeValueAsString(user))
+		mock.perform(post("/register").content("{ \"name\": \"dan\",     \"email\": \"shop1@mail.com\",     \"password\": \"shops\",     \"cellphone\": \"112323\",     \"address\": \"1\",     \"authorities\":[ {\"role\" : \"ROLE_TENDERO\" }] }")
 				.header("Content-Type","application/json")).andExpect(status().is2xxSuccessful());
 		mock.perform(post("/login").content(mapper.writeValueAsString(req))
 				.header("Content-Type","application/json")).andDo((request)->{
@@ -152,12 +132,8 @@ class ProjectIetiApplicationTests {
 	@Test
 	public void shoudntBeAddAShop() throws Exception{
 		createRoles();
-		User user = new User("shop2@mail.com","shop2","shops2","CR 1RA","111112");
-		ArrayList<Role> rolesUser = new ArrayList<>();
-		rolesUser.add(roles[1]);
-		user.setAuthorities(rolesUser);
 		JwtRequest req = new JwtRequest("shop2@mail.com","shops2");
-		mock.perform(post("/register").content(mapper.writeValueAsString(user))
+		mock.perform(post("/register").content("{ \"name\": \"shop2\",     \"email\": \"shop2@mail.com\",     \"password\": \"shops2\",     \"cellphone\": \"112323\",     \"address\": \"1\",     \"authorities\":[ {\"role\" : \"ROLE_TENDERO\" }] }")
 				.header("Content-Type","application/json")).andExpect(status().is2xxSuccessful());
 		mock.perform(post("/login").content(mapper.writeValueAsString(req))
 				.header("Content-Type","application/json")).andDo((request)->{
@@ -166,19 +142,14 @@ class ProjectIetiApplicationTests {
 		Shop shop = new Shop("Shop2",new ArrayList<Product>(),"Calle 10ma Bogota DC","Supermarket");
 		mock.perform(post("/shops").header("Authorization",token).content(mapper.writeValueAsString(shop)).contentType("application/json"))
 				.andExpect(status().is2xxSuccessful());
-		Shop shop2 = new Shop("Shop3",new ArrayList<Product>(),"Calle 10ma Bogota DC","Restaurant");
 		mock.perform(post("/shops").header("Authorization",token).content(mapper.writeValueAsString(shop)).contentType("application/json"))
 				.andExpect(status().is4xxClientError());
 	}
 	@Test
 	public void shouldBeQueryAShop() throws Exception{
 		createRoles();
-		User user = new User("shop3@mail.com","shop3","shops3","CR 1RA","111112");
-		ArrayList<Role> rolesUser = new ArrayList<>();
-		rolesUser.add(roles[1]);
-		user.setAuthorities(rolesUser);
-		JwtRequest req = new JwtRequest("shop3@mail.com","shops3");
-		mock.perform(post("/register").content(mapper.writeValueAsString(user))
+		JwtRequest req = new JwtRequest("shopquery@mail.com","shopsquery");
+		mock.perform(post("/register").content("{ \"name\": \"dan\",     \"email\": \"shopquery@mail.com\",     \"password\": \"shopsquery\",     \"cellphone\": \"112323\",     \"address\": \"1\",     \"authorities\":[ {\"role\" : \"ROLE_TENDERO\" }] }")
 				.header("Content-Type","application/json")).andExpect(status().is2xxSuccessful());
 		mock.perform(post("/login").content(mapper.writeValueAsString(req))
 				.header("Content-Type","application/json")).andDo((request)->{
@@ -198,12 +169,8 @@ class ProjectIetiApplicationTests {
 	@Test
 	public void shouldBeFindAshopByType() throws Exception{
 		createRoles();
-		User user = new User("shoptype@mail.com","shoptype","shopstype","CR 1RA","111112");
-		ArrayList<Role> rolesUser = new ArrayList<>();
-		rolesUser.add(roles[1]);
-		user.setAuthorities(rolesUser);
 		JwtRequest req = new JwtRequest("shoptype@mail.com","shopstype");
-		mock.perform(post("/register").content(mapper.writeValueAsString(user))
+		mock.perform(post("/register").content("{ \"name\": \"dan\",     \"email\": \"shoptype@mail.com\",     \"password\": \"shopstype\",     \"cellphone\": \"112323\",     \"address\": \"1\",     \"authorities\":[ {\"role\" : \"ROLE_TENDERO\" }] }")
 				.header("Content-Type","application/json")).andExpect(status().is2xxSuccessful());
 		mock.perform(post("/login").content(mapper.writeValueAsString(req))
 				.header("Content-Type","application/json")).andDo((request)->{

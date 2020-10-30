@@ -47,6 +47,8 @@ public class UserController {
     @GetMapping("/role")
     public ResponseEntity<?> getRole(Authentication token){
         List<String> roles = new ArrayList<>();
+        System.out.println("Search"+token.getName());
+        System.out.println(roles.toString());
         token.getAuthorities().forEach(e -> roles.add(e.toString()));
         return ResponseEntity.ok(roles);
     }

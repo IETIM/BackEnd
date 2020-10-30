@@ -30,7 +30,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 
         User usuario = userRepository.getUserByEmail(s).get();
         System.out.println("holaaaaaaaaa");
-
+        System.out.println(usuario.getAuthorities());
         List<GrantedAuthority> authorities = usuario.getAuthorities()
                 .stream()
                 .map(rol -> new SimpleGrantedAuthority(rol.getAuthority()))
