@@ -11,9 +11,9 @@ public interface ShopServices {
 
     List<Shop> getShopsByType(String type);
 
-    Shop getShopsByName(String name) throws ShopException;
+    Shop getShopsById(String id) throws ShopException;
 
-    void addShop(Shop shop) throws ShopException;
+    Shop addShop(Shop shop) throws ShopException;
 
 }
 

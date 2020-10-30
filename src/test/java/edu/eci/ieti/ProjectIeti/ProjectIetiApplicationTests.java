@@ -16,6 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+
 import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -41,6 +43,9 @@ class ProjectIetiApplicationTests {
 
 	@Autowired
 	private ShopRepository shopRepository;
+
+	@Autowired
+	ObjectMapper objectMapper;
 
 	private Role[] roles = null;
 
@@ -147,6 +152,7 @@ class ProjectIetiApplicationTests {
 	}
 	@Test
 	public void shouldBeQueryAShop() throws Exception{
+
 		createRoles();
 		JwtRequest req = new JwtRequest("shopquery@mail.com","shopsquery");
 		mock.perform(post("/register").content("{ \"name\": \"dan\",     \"email\": \"shopquery@mail.com\",     \"password\": \"shopsquery\",     \"cellphone\": \"112323\",     \"address\": \"1\",     \"authorities\":[ {\"role\" : \"ROLE_TENDERO\" }] }")
@@ -156,9 +162,11 @@ class ProjectIetiApplicationTests {
 			token = mapper.readValue(request.getResponse().getContentAsString(), JwtResponse.class).getToken();
 		});
 		Shop shop = new Shop("shop4",new ArrayList<Product>(),"Calle 5ta Bogota DC","Supermarket");
-		mock.perform(post("/shops").header("Authorization",token).content(mapper.writeValueAsString(shop)).contentType("application/json"))
-				.andExpect(status().is2xxSuccessful());
-		mock.perform(get("/shops/shop4")).andExpect(status().is2xxSuccessful());
+		MvcResult mvc = mock.perform(post("/shops").header("Authorization",token).content(mapper.writeValueAsString(shop)).contentType("application/json"))
+				.andExpect(status().is2xxSuccessful()).andReturn();
+		String response = mvc.getResponse().getContentAsString();
+		Shop s = objectMapper.readValue(response,Shop.class);
+		mock.perform(get("/shops/" + s.getId())).andExpect(status().is2xxSuccessful());
 	}
 
 	@Test

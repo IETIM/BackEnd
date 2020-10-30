@@ -19,10 +19,10 @@ public class ShopController {
     @Autowired
     private ShopServices shopServices;
 
-    @GetMapping(path = "/{name}")
-    public ResponseEntity<?> getShopByName(@PathVariable String name){
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<?> getShopByName(@PathVariable String id){
         try {
-            return new ResponseEntity<>(shopServices.getShopsByName(name), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(shopServices.getShopsById(id), HttpStatus.OK);
         } catch (ShopException e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
         }
@@ -41,8 +41,8 @@ public class ShopController {
     @PostMapping()
     public ResponseEntity<?> addShop(@RequestBody Shop shop){
         try {
-            shopServices.addShop(shop);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            Shop s = shopServices.addShop(shop);
+            return new ResponseEntity<>(s,HttpStatus.CREATED);
         } catch (ShopException e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
         }

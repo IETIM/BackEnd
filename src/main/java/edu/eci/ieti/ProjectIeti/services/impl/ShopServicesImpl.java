@@ -7,9 +7,10 @@ import edu.eci.ieti.ProjectIeti.persistence.ShopRepository;
 import edu.eci.ieti.ProjectIeti.services.ShopServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
-
+@CrossOrigin("*")
 @Service
 public class ShopServicesImpl implements ShopServices {
 
@@ -30,12 +31,12 @@ public class ShopServicesImpl implements ShopServices {
     }
 
     @Override
-    public Shop getShopsByName(String name) throws ShopException {
-        return shopRepository.findByName(name).orElseThrow(() -> new ShopException(ShopException.SHOP_NOT_FOUND));
+    public Shop getShopsById(String id) throws ShopException {
+        return shopRepository.findById(id).orElseThrow(() -> new ShopException(ShopException.SHOP_NOT_FOUND));
     }
 
     @Override
-    public void addShop(Shop shop) throws ShopException {
+    public Shop addShop(Shop shop) throws ShopException {
 
         if(shopRepository.findByName(shop.getName()).isPresent()){
             throw new ShopException(ShopException.SHOP_REGISTERED);
@@ -44,5 +45,6 @@ public class ShopServicesImpl implements ShopServices {
             productRepository.saveAll(shop.getProducts());
             shopRepository.save(shop);
         }
+        return shop;
     }
 }
