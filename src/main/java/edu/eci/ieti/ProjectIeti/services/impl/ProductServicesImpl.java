@@ -69,4 +69,9 @@ public class ProductServicesImpl implements ProductServices {
     public void deleteProduct(String idProduct) throws ShopException {
         productRepository.deleteById(idProduct);
     }
+
+    @Override
+    public Product getProductById(String id) {
+        return productRepository.findById(id).get();
+    }
 }

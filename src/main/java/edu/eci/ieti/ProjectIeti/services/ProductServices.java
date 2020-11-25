@@ -14,4 +14,6 @@ public interface ProductServices {
     Product updateProduct(Product product, String idProduct)throws ShopException;
 
     void deleteProduct(String idProduct)throws ShopException;
+
+    Product getProductById(String id);
 }
