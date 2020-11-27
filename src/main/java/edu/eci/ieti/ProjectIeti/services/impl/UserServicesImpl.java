@@ -52,21 +52,28 @@ public class UserServicesImpl implements UserServices {
     }
 
     @Override
-    public void update(User user) throws UserException {
-        Optional<User> usuarioOpcional=userRepository.findById(user.getId());
+    public void update(String email , User user) throws UserException {
+        Optional<User> usuarioOpcional = userRepository.getUserByEmail(email);
         if(!usuarioOpcional.isPresent()){
             throw new UserException(UserException.USER_NOT_FOUND);
         }
         else {
             User usuarioActual=usuarioOpcional.get();
-            if(user.getName()!=null){
+            if(user.getName()!=null && !user.getName().equals("")){
+                System.out.println("hola");
                 usuarioActual.setName(user.getName());
             }
-            if(user.getEmail()!=null){
+            if(user.getEmail()!=null && !user.getEmail().equals("") ){
                 usuarioActual.setEmail(user.getEmail());
             }
-            if(user.getPassword()!=null){
+            if(user.getPassword()!=null && !user.getPassword().equals("")){
                 usuarioActual.setPassword(passwordEncoder.encode(user.getPassword()));
+            }
+            if(user.getAddress()!=null && !user.getAddress().equals("")){
+                usuarioActual.setAddress(user.getAddress());
+            }
+            if(user.getCellphone()!=null && !user.getCellphone().equals("") ){
+                usuarioActual.setCellphone(user.getCellphone());
             }
             userRepository.save(usuarioActual);
         }

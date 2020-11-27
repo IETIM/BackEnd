@@ -56,6 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
                 .antMatchers(HttpMethod.GET,"/storekeeper","/storekeeper/*").hasAnyRole("TENDERO")
                 .antMatchers(HttpMethod.POST,"/products/*","/shops").hasAnyRole("TENDERO")
                 .antMatchers(HttpMethod.PUT,"/products/*").hasAnyRole("TENDERO")
+                .antMatchers(HttpMethod.PUT,"/*").hasAnyRole("TENDERO")
                 .antMatchers("/profile").hasAnyRole("TENDERO","USER")
                 .anyRequest().authenticated().and().
                 exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()

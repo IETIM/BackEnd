@@ -31,17 +31,16 @@ public class UserController {
         }
     }
 
-    @PatchMapping("/{userId}")
-    public  ResponseEntity<?> updateUser(@PathVariable String userId,@RequestBody User user){
+    @PatchMapping("/{email}")
+    public  ResponseEntity<?> updateUser(@PathVariable String email,@RequestBody User user){
         try{
-            user.setId(userId);
-            userServices.update(user);
+
+            userServices.update(email,user);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch (UserException e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
-
     }
 
     @GetMapping("/role")
@@ -57,4 +56,11 @@ public class UserController {
     public ResponseEntity<?> getUsername(Authentication auth){
         return new ResponseEntity<>(auth.getName(),HttpStatus.OK);
     }
+
+    @GetMapping(path = "/user")
+    public ResponseEntity<?> getUser(Authentication auth) throws UserException {
+        return new ResponseEntity<>(userServices.getUserByEmail(auth.getName()),HttpStatus.OK);
+    }
 }
+
+

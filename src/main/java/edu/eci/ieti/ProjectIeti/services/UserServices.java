@@ -11,7 +11,7 @@ public interface UserServices {
 
      User getUserByEmail(String email) throws UserException;
 
-     void update (User user)throws UserException;
+     void update (String email, User user)throws UserException;
 
      List<User> getAllUsers();
 
