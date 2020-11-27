@@ -52,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 
                 .authorizeRequests()
                 .antMatchers("/login","/register","/users/*","/storekeeper/register","/role").permitAll()
-                .antMatchers(HttpMethod.GET,"/products/*","/shops","/shops/*").permitAll()
+                .antMatchers(HttpMethod.GET,"/products/*", "/products/id/*","/shops","/shops/*").permitAll()
                 .antMatchers(HttpMethod.GET,"/storekeeper","/storekeeper/*").hasAnyRole("TENDERO")
                 .antMatchers(HttpMethod.POST,"/products/*","/shops").hasAnyRole("TENDERO")
                 .antMatchers(HttpMethod.PUT,"/products/*").hasAnyRole("TENDERO")
