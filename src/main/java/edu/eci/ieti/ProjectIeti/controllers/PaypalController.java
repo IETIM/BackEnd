@@ -30,7 +30,7 @@ public class PaypalController {
     @Value("${application.frontend.url}")
     private String frontURL;
 
-    @PostMapping("/pay/{orderId}")
+    @PostMapping("/pay/{orderId}")  
     public ResponseEntity<?> payment(@PathVariable String orderId) {
         try {
             Order order = orderServices.getOrder(orderId);
