@@ -23,11 +23,14 @@ public class Shop {
 
     private String location;
 
+    private String image;
+
     private String type;
 
     private String apiClient;
 
     private String apiSecret;
+
 
     public Shop() {
         this.products = new ArrayList<>();
@@ -38,6 +41,15 @@ public class Shop {
         this.products = products;
         this.location = location;
         this.type = type;
+    }
+
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getId() {
